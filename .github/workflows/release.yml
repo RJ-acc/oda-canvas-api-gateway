@@ -32,7 +32,7 @@ jobs:
           helm dependency update
           cd ../canvas-api-gateway/apisix-gateway
           helm dependency update
-          cd ../canvas-api-gateway/kong-gateway
+          cd ../kong-gateway
           helm dependency update
 
       - name: Run chart-releaser
