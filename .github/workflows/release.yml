@@ -33,7 +33,7 @@ jobs:
           # Update dependencies for API gateways
           cd ../canvas-api-gateway/apisix-gateway
           helm dependency update
-          cd ../../kong-gateway
+          cd ../kong-gateway
           helm dependency update
           cd ../..
 
