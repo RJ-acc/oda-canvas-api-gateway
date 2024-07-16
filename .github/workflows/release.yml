@@ -44,3 +44,7 @@ jobs:
           skip_existing: true
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: List packaged charts
+        run: ls -la ./charts/
+
