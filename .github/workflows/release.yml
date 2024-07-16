@@ -46,5 +46,7 @@ jobs:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: List packaged charts
-        run: ls -la ./charts/
+        run: |
+          ls -la ./charts/
+          ls -la ./charts/canvas-api-gateway
 
