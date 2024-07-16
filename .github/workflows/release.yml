@@ -34,10 +34,9 @@ jobs:
           helm dependency update
           cd ../kong-gateway
           helm dependency update
-          cd ../..
+          cd ../../canvas-oda
           pwd
           ls -l
-          cd ../canvas-oda
           helm dependency update
 
       - name: Run chart-releaser
