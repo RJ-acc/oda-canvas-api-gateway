@@ -3,6 +3,57 @@ entries:
   canvas-oda:
   - apiVersion: v2
     appVersion: v1beta3
+    created: "2024-07-16T10:48:09.924933683Z"
+    dependencies:
+    - name: cert-manager-init
+      repository: file://../cert-manager-init
+      version: 1.0.0
+    - condition: canvas-namespaces.enabled
+      name: canvas-namespaces
+      repository: file://../canvas-namespaces
+      version: 1.0.1
+    - condition: oda-crds.enabled
+      name: oda-crds
+      repository: file://../oda-crds
+      version: 1.1.0
+    - condition: keycloak.enabled
+      name: keycloak
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.0.2
+    - name: controller
+      repository: file://../controller
+      version: 1.1.0
+    - condition: dependentapi-simple-operator.enabled
+      name: dependentapi-simple-operator
+      repository: file://../dependentapi-simple-operator
+      version: 0.1.1
+    - name: secretsmanagement-operator
+      repository: file://../secretsmanagement-operator
+      version: 0.1.0
+    - condition: canvas-vault.enabled
+      name: canvas-vault
+      repository: file://../canvas-vault
+      version: 0.1.0
+    - name: oda-webhook
+      repository: file://../oda-webhook
+      version: 1.1.1
+    - condition: kong-gateway.enabled
+      name: kong-gateway
+      repository: file://../canvas-api-gateway/kong-gateway
+      version: 0.1.0
+    - condition: apisix-gateway.enabled
+      name: apisix-gateway
+      repository: file://../canvas-api-gateway/apisix-gateway
+      version: 0.1.0
+    description: A Helm of helm to orchestrate the ODA installation
+    digest: f7ce847348f2f83fa52a7057a20497a3bca24819cd3e71de031a0438965127d8
+    name: canvas-oda
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/canvas-oda-1.1.5/canvas-oda-1.1.5.tgz
+    version: 1.1.5
+  - apiVersion: v2
+    appVersion: v1beta3
     created: "2024-07-15T07:42:22.427942066Z"
     dependencies:
     - name: cert-manager-init
@@ -50,4 +101,4 @@ entries:
     urls:
     - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/canvas-oda-1.1.4/canvas-oda-1.1.4.tgz
     version: 1.1.4
-generated: "2024-07-15T07:42:22.427951493Z"
+generated: "2024-07-16T10:48:09.924945335Z"
