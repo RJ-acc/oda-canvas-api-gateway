@@ -36,6 +36,7 @@ jobs:
           helm dependency update
           cd ../..
           pwd
+          ls -l
           cd ../canvas-oda
           helm dependency update
 
