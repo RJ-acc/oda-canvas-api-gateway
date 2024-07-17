@@ -1,3 +1,5 @@
+apisix:
+  enabled: false
 gateway:
   type: LoadBalancer  # Override the service type
 
