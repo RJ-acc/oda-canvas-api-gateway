@@ -1,4 +1,4 @@
-apisix:
+apisix-install:
   enabled: false
 gateway:
   type: LoadBalancer  # Override the service type
