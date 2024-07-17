@@ -29,12 +29,7 @@ jobs:
           helm dependency update
           cd ../canvas-vault
           helm dependency update
-          # Update dependencies for API gateways
-          cd ../canvas-api-gateway/apisix-gateway
-          helm dependency update
-          cd ../kong-gateway
-          helm dependency update
-          cd ../../canvas-oda
+          cd ../canvas-oda
           helm dependency update
 
       - name: Run chart-releaser
