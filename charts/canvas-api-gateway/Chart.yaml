@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 name: canvas-api-gateway
 description: A Helm of helm to orchestrate the ODA API Gateway installation
 
