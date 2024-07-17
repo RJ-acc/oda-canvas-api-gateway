@@ -1,5 +1,3 @@
-kong-install:
-  enabled: false
 kong:
   deployment:
     kong:
