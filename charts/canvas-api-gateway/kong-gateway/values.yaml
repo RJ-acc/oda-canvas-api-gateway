@@ -1,4 +1,6 @@
 kong:
+  enabled: false
+kong:
   deployment:
     kong:
       enabled: true
