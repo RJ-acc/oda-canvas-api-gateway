@@ -1,0 +1,4 @@
+kong-gateway:
+  enabled: false
+apisix-gateway:
+  enabled: false
