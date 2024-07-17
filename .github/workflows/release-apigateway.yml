@@ -28,13 +28,13 @@ jobs:
           # Update dependencies for API gateways
           cd ./charts/canvas-api-gateway/kong-gateway
           helm dependency update
-          cd ..
+          cd ./charts/canvas-api-gateway/
           helm dependency update
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
         with:
-          charts_dir: ./charts/canvas-api-gateway/
+          charts_dir: ./charts/canvas-api-gateway
           skip_existing: true
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
