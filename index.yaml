@@ -1,5 +1,16 @@
 apiVersion: v1
 entries:
+  canvas-api-gateway:
+  - apiVersion: v1
+    appVersion: v1beta3
+    created: "2024-07-17T11:19:53.77608872Z"
+    description: A Helm of helm to orchestrate the ODA API Gateway installation
+    digest: 62f2a3edf4aa12f2076738c919fa27c7517ee4cabf08ccc45f2f34605996182e
+    name: canvas-api-gateway
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/canvas-api-gateway-0.0.1/canvas-api-gateway-0.0.1.tgz
+    version: 0.0.1
   canvas-namespaces:
   - apiVersion: v2
     appVersion: v1beta3
@@ -378,4 +389,4 @@ entries:
     urls:
     - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/secretsmanagement-operator-0.1.0/secretsmanagement-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-07-17T10:35:31.857882629Z"
+generated: "2024-07-17T11:19:53.928500995Z"
