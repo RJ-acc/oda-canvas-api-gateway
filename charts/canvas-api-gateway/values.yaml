@@ -1,4 +1,4 @@
-kong-gateway:
+kong-gateway-install:
   enabled: false
-apisix-gateway:
+apisix-gateway-install:
   enabled: false
