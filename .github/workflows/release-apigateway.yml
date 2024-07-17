@@ -26,7 +26,7 @@ jobs:
           helm repo add hashicorp https://helm.releases.hashicorp.com
           helm repo update
           # Update dependencies for API gateways
-          cd ../canvas-api-gateway/kong-gateway
+          cd ./charts/canvas-api-gateway/kong-gateway
           helm dependency update
           cd ..
           helm dependency update
