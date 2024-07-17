@@ -1,4 +1,4 @@
-kong:
+kong-install:
   enabled: false
 kong:
   deployment:
