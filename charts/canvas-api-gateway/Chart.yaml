@@ -35,6 +35,11 @@ dependencies:
     version: "0.1.0"
     repository: 'file://../canvas-api-gateway/kong-gateway'
     condition: kong-gateway.enabled
+  - name: apisix-gateway
+    version: "0.1.0"
+    repository: 'file://../canvas-api-gateway/apisix-gateway'
+    condition: apisix-gateway.enabled
+
 
 
 
