@@ -27,6 +27,6 @@ dependencies:
 - name: apisix
   version: "2.7.0"  #chart version.
   repository: "https://charts.apiseven.com"
-  condition: apisix.enabled
+  condition: apisix-install.enabled
   alias: apisix  
 
