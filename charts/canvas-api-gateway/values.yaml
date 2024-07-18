@@ -40,12 +40,13 @@ kong-gateway:
 # Configuration for apisix-gateway installation
 apisix-gateway-install:
   enabled: false  # Enable apisix-gateway if needed
-  apisix:
-    gateway:
-      type: LoadBalancer
-    ingress-controller:
-      config:
-        apisix:
-          adminAPIVersion: v3
-      serviceNamespace: ingress-apisix
-      enabled: true
+apisix-gateway:
+    apisix:
+      gateway:
+        type: LoadBalancer
+      ingress-controller:
+        config:
+          apisix:
+            adminAPIVersion: v3
+        serviceNamespace: ingress-apisix
+        enabled: true
