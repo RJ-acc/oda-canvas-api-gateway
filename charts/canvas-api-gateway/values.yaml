@@ -31,7 +31,7 @@ kong-gateway-install:
       prefix: "/kong_prefix/"
     admin:
       enabled: true
-      type: LoadBalancer
+      type: NodePort
     proxy:
       enabled: true
       type: LoadBalancer
