@@ -41,6 +41,7 @@ kong-gateway:
 apisix-gateway-install:
   enabled: false  # Enable apisix-gateway if needed
 apisix-gateway:
+  apisix:
     apisix:
       gateway:
         type: LoadBalancer
