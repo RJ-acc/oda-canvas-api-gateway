@@ -32,7 +32,7 @@ kong-gateway:
         prefix: "/kong_prefix/"
       admin:
         enabled: true
-        type: NodePort
+        type: LoadBalancer
       proxy:
         enabled: true
         type: LoadBalancer
