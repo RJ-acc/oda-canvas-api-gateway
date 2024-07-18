@@ -3,7 +3,7 @@
 # Configuration for kong-gateway installation
 kong-gateway-install:
   enabled: false  # Enable kong-gateway if needed
-  kong-gateway:
+kong-gateway:
     kong:
       # Direct configurations to the kong sub-chart if needed
       deployment:
