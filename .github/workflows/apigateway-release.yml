@@ -3,7 +3,7 @@ name: Release Charts
 on:
   push:
     branches:
-      - gateway-helm-with-templates
+      - gateway-helm-with-operator
 
 jobs:
   release:
