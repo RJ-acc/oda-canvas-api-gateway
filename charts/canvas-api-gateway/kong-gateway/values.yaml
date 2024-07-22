@@ -86,7 +86,6 @@ kong:
       enabled: true
 kongoperatorreplicaCount: 1
 kongoperatorimage:
-  repository: ravijangra92/kong-operator
-  tag: 2.0
+  repository: ravijangra92/kong-operator:2.0
   pullPolicy: IfNotPresent
 
