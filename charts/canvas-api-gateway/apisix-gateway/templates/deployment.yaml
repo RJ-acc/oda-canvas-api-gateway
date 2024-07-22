@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: apisix-operator
+  name: {{ .Release.Name }}-operator
   namespace: ingress-apisix
 spec:
   replicas: {{ .Values.operatorreplicaCount }}
   selector:
     matchLabels:
-      app: apisix-operator
+      app: {{ .Release.Name }}-operator
   template:
     metadata:
       labels:
-        app: apisix-operator
+        app: {{ .Release.Name }}-operator
     spec:
-      serviceAccountName: apisix-operator
+      serviceAccountName: {{ .Release.Name }}-operator
       containers:
-      - name: apisix-operator
+      - name: {{ .Release.Name }}-operator
         image: {{ .Values.operatorimage.repository }}
         imagePullPolicy: {{ .Values.operatorimage.pullPolicy }}
