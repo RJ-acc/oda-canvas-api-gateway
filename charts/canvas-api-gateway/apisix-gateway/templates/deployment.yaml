@@ -4,7 +4,7 @@ metadata:
   name: apisix-operator
   namespace: ingress-apisix
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.operatorreplicaCount }}
   selector:
     matchLabels:
       app: apisix-operator
@@ -16,5 +16,5 @@ spec:
       serviceAccountName: apisix-operator
       containers:
       - name: apisix-operator
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        image: "{{ .Values.operatorimage.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
