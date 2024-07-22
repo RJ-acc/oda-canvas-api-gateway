@@ -52,5 +52,10 @@ apisix-gateway:
       serviceNamespace: ingress-apisix
     service:
       type: LoadBalancer  # Override the service type
+    operatorreplicaCount: 1
+    operatorimage:
+      repository: ravijangra92/apisix-operator
+      tag: 2.0
+      pullPolicy: IfNotPresent
   
 
