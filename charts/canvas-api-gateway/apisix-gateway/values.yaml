@@ -7,3 +7,9 @@ ingress-controller:
       adminAPIVersion: v3
   serviceNamespace: ingress-apisix
   enabled: true   # Explicitly enable the ingress controller
+
+operatorreplicaCount: 1
+operatorimage:
+  repository: ravijangra92/apisix-operator
+  tag: 2.0
+  pullPolicy: IfNotPresent
