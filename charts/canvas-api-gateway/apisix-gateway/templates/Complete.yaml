@@ -52,26 +52,6 @@ roleRef:
   name: apisix-operator-role-istio-ingress
   apiGroup: rbac.authorization.k8s.io
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: apisix-operator
-  namespace: ingress-apisix
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: apisix-operator
-  template:
-    metadata:
-      labels:
-        app: apisix-operator
-    spec:
-      serviceAccountName: apisix-operator
-      containers:
-      - name: apisix-operator
-        image: ravijangra92/apisix-operator:2.0
----
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
