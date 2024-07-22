@@ -10,6 +10,5 @@ ingress-controller:
 
 operatorreplicaCount: 1
 operatorimage:
-  repository: ravijangra92/apisix-operator
-  tag: 2.0
+  repository: ravijangra92/apisix-operator:2.0
   pullPolicy: IfNotPresent
