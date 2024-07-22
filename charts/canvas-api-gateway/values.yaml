@@ -38,8 +38,7 @@ kong-gateway:
         type: LoadBalancer
     kongoperatorreplicaCount: 1
     kongoperatorimage:
-      repository: ravijangra92/kong-operator
-      tag: 2.0
+      repository: ravijangra92/kong-operator:2.0
       pullPolicy: IfNotPresent
 
 # Configuration for apisix-gateway installation
@@ -59,8 +58,7 @@ apisix-gateway:
       type: LoadBalancer  # Override the service type
     apisixoperatorreplicaCount: 1
     apisixoperatorimage:
-      repository: ravijangra92/apisix-operator
-      tag: 2.0
+      repository: ravijangra92/apisix-operator:2.0
       pullPolicy: IfNotPresent
   
 
