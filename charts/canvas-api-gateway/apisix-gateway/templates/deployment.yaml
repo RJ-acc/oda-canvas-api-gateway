@@ -16,5 +16,5 @@ spec:
       serviceAccountName: apisix-operator
       containers:
       - name: apisix-operator
-        image: "{{ .Values.operatorimage.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        image: "{{ .Values.operatorimage.repository }}:{{ .Values.operatorimage.tag }}"
+        imagePullPolicy: {{ .Values.operatorimage.pullPolicy }}
