@@ -24,7 +24,7 @@ rules:
   resources: ["httproutes"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 - apiGroups: ["networking.k8s.io"]
-  resources: ["httproutes"]
+  resources: ["httproutes","ingresses"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 - apiGroups: ["configuration.konghq.com"]
   resources: ["kongplugins"]
