@@ -4,7 +4,7 @@ metadata:
   name: kong
   namespace: components
 spec:
-  gatewayClassName: {{ .Release.Name }}-gatewayclass
+  gatewayClassName: kong
   listeners:
     - name: http
       protocol: HTTP
