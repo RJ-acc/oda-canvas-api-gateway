@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-crds-install
+spec:
+  template:
+    spec:
+      serviceAccountName: {{ .Release.Name }}-operator
+      restartPolicy: OnFailure
+      containers:
+      - name: kubectl
+        image: bitnami/kubectl:latest
+        command:
+          - "sh"
+          - "-c"
+          - "kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml"
+      initContainers:
+      - name: wait-for-api
+        image: bitnami/kubectl:latest
+        command:
+          - "sh"
+          - "-c"
+          - |
+            until kubectl get crd gateways.gateway.networking.k8s.io; do echo waiting for CRD creation; sleep 2; done
