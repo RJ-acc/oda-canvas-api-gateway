@@ -47,7 +47,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: {{ .Release.Name }}-operator
-  namespace: ingress-apisix
+  namespace: kong
 roleRef:
   kind: Role
   name: {{ .Release.Name }}-operator-role-components
@@ -57,11 +57,11 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: {{ .Release.Name }}-operator-rolebinding-istio-ingress
-  namespace: istio-ingress
+  namespace: kong
 subjects:
 - kind: ServiceAccount
   name: {{ .Release.Name }}-operator
-  namespace: ingress-apisix
+  namespace: kong
 roleRef:
   kind: Role
   name: {{ .Release.Name }}-operator-role-istio-ingress
@@ -74,7 +74,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: {{ .Release.Name }}-operator
-  namespace: ingress-apisix
+  namespace: kong
 roleRef:
   kind: ClusterRole
   name: {{ .Release.Name }}-operator-clusterrole
