@@ -21,11 +21,7 @@ spec:
             - sh
             - -c
             - |
-              {{ if .Values.config.apisix.serviceFullname }}
-              until nc -z {{ .Values.config.apisix.serviceFullname }} {{ .Values.config.apisix.servicePort }}; do echo waiting for apisix-admin; sleep 2; done;
-              {{ else }}
-              until nc -z {{ .Values.config.apisix.serviceName }}.{{ .Values.config.apisix.serviceNamespace }}.svc.{{ .Values.clusterDomain }} {{ .Values.config.apisix.servicePort }}; do echo waiting for apisix-admin; sleep 2; done;
-              {{ end }}
+              until nc -z apisix-admin.ingress-apisix.svc.cluster.local 9180; do echo waiting for apisix-admin; sleep 2; done;
       containers:
       - name: {{ .Release.Name }}-operator
         image: {{ .Values.apisixoperatorimage.repository }}
