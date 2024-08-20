@@ -15,17 +15,17 @@ spec:
     spec:
       serviceAccountName: {{ .Release.Name }}-operator
       initContainers:
-      - name: wait-for-ingress-controller
-        image: curlimages/curl
-        command:
-        - sh
-        - -c
-        - |
-          until curl -sf http://apisix-ingress-controller.ingress-apisix.svc.cluster.local:port/healthz; do
-            echo "Waiting for apisix-ingress-controller to be fully operational..."
-            sleep 5
-          done
-          echo "apisix-ingress-controller is up and running."
+        - name: wait-apisix-admin
+          image: {{ .Values.initContainer.image }}:{{ .Values.initContainer.tag }}
+          command:
+            - sh
+            - -c
+            - |
+              {{ if .Values.config.apisix.serviceFullname }}
+              until nc -z {{ .Values.config.apisix.serviceFullname }} {{ .Values.config.apisix.servicePort }}; do echo waiting for apisix-admin; sleep 2; done;
+              {{ else }}
+              until nc -z {{ .Values.config.apisix.serviceName }}.{{ .Values.config.apisix.serviceNamespace }}.svc.{{ .Values.clusterDomain }} {{ .Values.config.apisix.servicePort }}; do echo waiting for apisix-admin; sleep 2; done;
+              {{ end }}
       containers:
       - name: {{ .Release.Name }}-operator
         image: {{ .Values.apisixoperatorimage.repository }}
