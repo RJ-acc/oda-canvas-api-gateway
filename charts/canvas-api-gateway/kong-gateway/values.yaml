@@ -15,7 +15,7 @@ kong:
       sizeLimit: 1Gi
   env:
     database: "postgres"
-    pg_host: "{{ .Release.Name }}-postgresql.kong.svc.cluster.local"
+    pg_host: "kong-postgresql.kong.svc.cluster.local"
     pg_user: "kong"
     pg_password: "kong"
     pg_database: "kong"
