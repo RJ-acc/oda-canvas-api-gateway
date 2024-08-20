@@ -21,7 +21,7 @@ spec:
             - sh
             - -c
             - |
-              until nc -z {{ .Release.Name }}-kong-admin.kong.svc.cluster.local 8001; do echo waiting for kong-admin; sleep 2; done;
+              until nc -z {{ .Release.Name }}-kong-admin.{{ .Release.Namespace }}.svc.cluster.local 8001; do echo waiting for {{ .Release.Name }}-admin; sleep 2; done;
       containers:
       - name: {{ .Release.Name }}-operator
         image: {{ .Values.kongoperatorimage.repository }}
