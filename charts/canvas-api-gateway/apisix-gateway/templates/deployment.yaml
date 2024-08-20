@@ -14,6 +14,18 @@ spec:
         app: {{ .Release.Name }}-operator
     spec:
       serviceAccountName: {{ .Release.Name }}-operator
+      initContainers:
+      - name: wait-for-ingress-controller
+        image: curlimages/curl
+        command:
+        - sh
+        - -c
+        - |
+          until curl -sf http://apisix-ingress-controller.ingress-apisix.svc.cluster.local:port/healthz; do
+            echo "Waiting for apisix-ingress-controller to be fully operational..."
+            sleep 5
+          done
+          echo "apisix-ingress-controller is up and running."
       containers:
       - name: {{ .Release.Name }}-operator
         image: {{ .Values.apisixoperatorimage.repository }}
