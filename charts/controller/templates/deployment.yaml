@@ -30,7 +30,6 @@ spec:
         volumeMounts:
         - name: config-volume
           mountPath: /config/run-command
-          subPath: run-command  
       - name: seccon
         image: {{ include "controller.secconDockerimage" . }}
         imagePullPolicy: {{ include "controller.secconImagePullPolicy" . }}
