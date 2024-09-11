@@ -27,6 +27,9 @@ spec:
               name: {{ .Release.Name }}-controller-configmap
           - secretRef:
               name: {{ .Release.Name }}-controller-secret
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config
       - name: seccon
         image: {{ include "controller.secconDockerimage" . }}
         imagePullPolicy: {{ include "controller.secconImagePullPolicy" . }}
