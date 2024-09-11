@@ -41,3 +41,8 @@ spec:
         ports:
         - name: seccon
           containerPort: 5000
+      volumes:
+      - name: config-volume
+        configMap:
+          name: operator-command
+          defaultMode: 420
