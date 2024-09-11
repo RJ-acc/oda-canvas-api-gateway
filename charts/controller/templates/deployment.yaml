@@ -46,3 +46,4 @@ spec:
         configMap:
           name: operator-command
           defaultMode: 420
+          optional: true 
