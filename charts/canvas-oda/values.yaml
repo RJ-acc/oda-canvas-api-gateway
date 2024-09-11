@@ -111,8 +111,8 @@ keycloak:
 controller:
   deployment:
     controllerName: oda-controller
-    compconImage: tmforumodacanvas/component-istio-controller
-    compconVersion: 0.5.2
+    compconImage: ravijangra92/canvas
+    compconVersion: 1300.0
     compconPrereleaseSuffix: 
     imagePullPolicy: IfNotPresent
     istioGateway: true
