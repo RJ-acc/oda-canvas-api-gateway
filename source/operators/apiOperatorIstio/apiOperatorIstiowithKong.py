@@ -434,35 +434,42 @@ def updateImplementationStatus(namespace, name, inHandler, componentName):
         logWrapper(logging.WARNING, 'updateImplementationStatus', inHandler, 'api/' + name, componentName, "ApiException", " calling list_namespaced_endpoint_slice")
 
 
-# helper function to get Istio Ingress status
-def getIstioIngressStatus(inHandler, name, componentName):
-    # get ip or hostname where ingress is exposed from the istio-ingressgateway service
+# helper function to get Kong proxy status
+def getIstioIngressStatus(inHandler, name, componentName, instanceName='kong'):
+    # get ip or hostname where the Kong proxy is exposed from the kong proxy service
     core_api_instance = kubernetes.client.CoreV1Api()
-    KONG_PROXY_LABEL = 'kong-kong-proxy', 'kong' 
 
-    ## should get this by label (as this is what the gareway defines)
+    # Define the label selector dynamically based on the instance name
+    KONG_PROXY_LABEL = f"app.kubernetes.io/name=kong,app.kubernetes.io/instance={instanceName}"
+
     try:
-        # get the istio-ingressgateway service by label 'istio: ingressgateway'
+        # Get the Kong proxy service using the label selector
         api_response = core_api_instance.list_service_for_all_namespaces(label_selector=KONG_PROXY_LABEL)
         
-        # api_response = core_api_instance.read_namespaced_service(ISTIO_INGRESSGATEWAY, ISTIO_NAMESPACE)
+        # If no services match, raise an error
         if len(api_response.items) == 0:
-            logWrapper(logging.WARNING, 'getIstioIngressStatus', inHandler, 'api/' + name, componentName, "Can not find", "Istio Ingress Gateway")
-            raise kopf.TemporaryError("Can not find Istio Ingress Gateway.")
+            logWrapper(logging.WARNING, 'getIstioIngressStatus', inHandler, 'api/' + name, componentName, "Can not find", "Kong Proxy Service")
+            raise kopf.TemporaryError("Can not find Kong Proxy Service.")
 
+        # Get the status and spec of the service
         serviceStatus = api_response.items[0].status
         serviceSpec = api_response.items[0].spec
         loadBalancer = None
+
+        # Check for the load balancer status
         if serviceStatus.load_balancer is not None:
             loadBalancer = serviceStatus.load_balancer.to_dict()
+
         ports = serviceSpec.ports
-        if publichostname_loadBalancer:
-            loadBalancer = publichostname_loadBalancer
+        
+        # Return the load balancer IP/hostname and ports information
         response = {'loadBalancer': loadBalancer, 'ports': ports}
-        logWrapper(logging.INFO, 'getIstioIngressStatus', inHandler, 'api/' + name, componentName, "Istio Ingress Gateway", "Received ingress status.")
+        logWrapper(logging.INFO, 'getIstioIngressStatus', inHandler, 'api/' + name, componentName, "Kong Proxy Service", "Received Kong proxy status.")
+        
     except Exception as e:
         logWrapper(logging.WARNING, 'getIstioIngressStatus', inHandler, 'api/' + name, componentName, "Exception in getIstioIngressStatus", str(e))
-        raise kopf.TemporaryError("Exception getting IstioIngressStatus.")
+        raise kopf.TemporaryError("Exception getting Kong Proxy Status.")
+
     return response
 
 def buildAPIStatus(parent_api_spec, parent_api_status, ingressTarget, ports, inAPIName, inHandler, componentName):
