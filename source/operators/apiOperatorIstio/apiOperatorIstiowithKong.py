@@ -29,7 +29,7 @@ logger = logging.getLogger('APIOperator')
 logger.setLevel(int(logging_level))
 logger.info(f'Logging set to %s', logging_level)
 
-HTTP_SCHEME = "http://"
+HTTP_SCHEME = "https://"
 HTTP_K8s_LABELS = ['http', 'http2']
 HTTP_STANDARD_PORTS = [80, 443]
 GROUP = "oda.tmforum.org"
