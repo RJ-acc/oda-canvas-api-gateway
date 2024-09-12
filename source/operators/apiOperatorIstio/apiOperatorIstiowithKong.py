@@ -438,12 +438,12 @@ def updateImplementationStatus(namespace, name, inHandler, componentName):
 def getIstioIngressStatus(inHandler, name, componentName):
     # get ip or hostname where ingress is exposed from the istio-ingressgateway service
     core_api_instance = kubernetes.client.CoreV1Api()
-    ISTIO_INGRESSGATEWAY_LABEL = "istio=ingressgateway" 
+    KONG_PROXY_LABEL = 'kong-kong-proxy', 'kong' 
 
     ## should get this by label (as this is what the gareway defines)
     try:
         # get the istio-ingressgateway service by label 'istio: ingressgateway'
-        api_response = core_api_instance.list_service_for_all_namespaces(label_selector=ISTIO_INGRESSGATEWAY_LABEL)
+        api_response = core_api_instance.list_service_for_all_namespaces(label_selector=KONG_PROXY_LABEL)
         
         # api_response = core_api_instance.read_namespaced_service(ISTIO_INGRESSGATEWAY, ISTIO_NAMESPACE)
         if len(api_response.items) == 0:
