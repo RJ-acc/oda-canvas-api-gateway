@@ -435,34 +435,29 @@ def updateImplementationStatus(namespace, name, inHandler, componentName):
 
 
 # helper function to get Kong proxy status
-def getIstioIngressStatus(inHandler, name, componentName, instanceName='kong'):
-    # get ip or hostname where the Kong proxy is exposed from the kong proxy service
+def getIstioIngressStatus(inHandler, name, componentName):
+    # get ip or hostname where the Kong proxy is exposed from the kong-kong-proxy service
     core_api_instance = kubernetes.client.CoreV1Api()
 
-    # Define the label selector dynamically based on the instance name
-    KONG_PROXY_LABEL = f"app.kubernetes.io/name=kong,app.kubernetes.io/instance={instanceName}"
-
     try:
-        # Get the Kong proxy service using the label selector
-        api_response = core_api_instance.list_service_for_all_namespaces(label_selector=KONG_PROXY_LABEL)
-        
-        # If no services match, raise an error
-        if len(api_response.items) == 0:
+        # get the kong proxy service by name 'kong-kong-proxy' in the 'kong' namespace
+        api_response = core_api_instance.read_namespaced_service('kong-kong-proxy', 'kong')
+
+        if not api_response:
             logWrapper(logging.WARNING, 'getIstioIngressStatus', inHandler, 'api/' + name, componentName, "Can not find", "Kong Proxy Service")
             raise kopf.TemporaryError("Can not find Kong Proxy Service.")
 
-        # Get the status and spec of the service
-        serviceStatus = api_response.items[0].status
-        serviceSpec = api_response.items[0].spec
+        serviceStatus = api_response.status
+        serviceSpec = api_response.spec
         loadBalancer = None
 
-        # Check for the load balancer status
+        # Get the load balancer (IP or hostname) details from the Kong proxy service status
         if serviceStatus.load_balancer is not None:
             loadBalancer = serviceStatus.load_balancer.to_dict()
 
         ports = serviceSpec.ports
         
-        # Return the load balancer IP/hostname and ports information
+        # Return the ingress information including the load balancer and ports
         response = {'loadBalancer': loadBalancer, 'ports': ports}
         logWrapper(logging.INFO, 'getIstioIngressStatus', inHandler, 'api/' + name, componentName, "Kong Proxy Service", "Received Kong proxy status.")
         
