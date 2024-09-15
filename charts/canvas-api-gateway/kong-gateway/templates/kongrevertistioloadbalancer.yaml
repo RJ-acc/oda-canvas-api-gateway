@@ -4,8 +4,8 @@ metadata:
   name: {{ .Release.Name }}-preuninstall-patch-istio-ingress
   namespace: {{ .Values.namespace }}
   annotations:
-    "helm.sh/hook": pre-uninstall
-    "helm.sh/hook-weight": "0"  # Ensure it runs before uninstalling other resources
+    "helm.sh/hook": post-uninstall
+    "helm.sh/hook-weight": "5"  # Ensure it runs before uninstalling other resources
 spec:
   template:
     spec:
