@@ -74,6 +74,9 @@ rules:
   - apiGroups: ["configuration.konghq.com"]
     resources: ["kongplugins"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["apisix.apache.org"]
+    resources: ["apisixroutes", "apisixpluginconfigs"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
 
   # Application: other resources it produces and manipulates.
@@ -160,6 +163,10 @@ rules:
   - apiGroups: ["configuration.konghq.com"]
     resources: ["kongplugins"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["apisix.apache.org"]
+    resources: ["apisixroutes", "apisixpluginconfigs"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
 
 
   # Application: other resources it produces and manipulates.
