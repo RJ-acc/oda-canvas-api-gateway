@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Values.namespace }}
   annotations:
     "helm.sh/hook": post-install
-    "helm.sh/hook-weight": "2"
+    #"helm.sh/hook-weight": "2"
 spec:
   template:
     spec:
