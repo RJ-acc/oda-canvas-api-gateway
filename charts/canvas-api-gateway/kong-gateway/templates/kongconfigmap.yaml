@@ -5,7 +5,8 @@ metadata:
   namespace: canvas
   annotations:
     "helm.sh/hook": post-install
-    "helm.sh/hook-weight": "1"  # Ensures it runs after the init Job completes
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed  # Deletes if install fails or if it succeeds
 data:
   run-command: |
     apiOperatorKong
