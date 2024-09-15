@@ -1,17 +1,10 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: {{ .Release.Name }}-operator
+  name: {{ .Release.Name }}-operator-job
   namespace: kong
 spec:
-  replicas: {{ .Values.kongoperatorreplicaCount }}
-  selector:
-    matchLabels:
-      app: {{ .Release.Name }}-operator
   template:
-    metadata:
-      labels:
-        app: {{ .Release.Name }}-operator
     spec:
       serviceAccountName: {{ .Release.Name }}-operator
       initContainers:
@@ -26,3 +19,5 @@ spec:
       - name: {{ .Release.Name }}-operator
         image: {{ .Values.kongoperatorimage.repository }}
         imagePullPolicy: {{ .Values.kongoperatorimage.pullPolicy }}
+      restartPolicy: Never
+  backoffLimit: 3
