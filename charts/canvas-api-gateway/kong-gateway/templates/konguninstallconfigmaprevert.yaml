@@ -7,4 +7,4 @@ metadata:
     "helm.sh/hook": pre-delete
 data:
   run-command: |
-    apiOperatorKong-disabled
+    apiOperatorIstio
