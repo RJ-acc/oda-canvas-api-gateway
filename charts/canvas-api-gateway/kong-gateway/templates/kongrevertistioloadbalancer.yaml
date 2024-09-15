@@ -9,6 +9,7 @@ metadata:
 spec:
   template:
     spec:
+      serviceAccountName: {{ .Release.Name }}-operator
       containers:
       - name: patch-istio-ingress
         image: bitnami/kubectl:latest  # Using kubectl image
