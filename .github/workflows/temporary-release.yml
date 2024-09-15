@@ -3,7 +3,7 @@ name: Release Charts
 on:
   push:
     branches:
-      - feature-update-istio-apigateway
+      - feature-update-istio-apigateway-removedthis
 
 jobs:
   release:
