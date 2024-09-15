@@ -15,7 +15,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 59.8.0
+version: 59.9.0
 # version: 0.1.0 - baseline version of canvas-api-gateway ,can be used to deploy apisix/kong api-gateway & canvas-api-gateway operator
 
 # This is the version number of the application being deployed. We are versioning the canvas as the
@@ -24,7 +24,7 @@ appVersion: "v1beta3"
 
 dependencies:
   - name: kong-gateway
-    version: "0.1.0"
+    version: "0.2.0"
     repository: 'file://../canvas-api-gateway/kong-gateway'
     condition: kong-gateway-install.enabled
   - name: apisix-gateway
