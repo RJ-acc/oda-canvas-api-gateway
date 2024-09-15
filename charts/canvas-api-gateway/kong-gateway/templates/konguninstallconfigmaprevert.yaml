@@ -5,7 +5,7 @@ metadata:
   namespace: canvas
   annotations:
     "helm.sh/hook": post-uninstall
-    "helm.sh/hook-weight": "1"
+    #"helm.sh/hook-weight": "1"
     "helm.sh/hook-delete-policy": before-hook-creation,hook-failed
 data:
   run-command: |
