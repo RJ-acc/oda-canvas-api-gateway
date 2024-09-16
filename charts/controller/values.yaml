@@ -1,7 +1,7 @@
 deployment:
   controllerName: oda-controller
   compconImage: ravijangra92/canvas
-  compconVersion: 20.9.2
+  compconVersion: 20.9.3
   compconPrereleaseSuffix:
   compconImagePullPolicy: IfNotPresent
   istioGateway: true
