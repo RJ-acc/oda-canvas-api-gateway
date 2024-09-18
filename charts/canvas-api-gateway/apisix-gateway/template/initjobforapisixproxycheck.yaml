@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-operator-job
+  namespace: ingress-apisix
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    spec:
+      serviceAccountName: {{ .Release.Name }}-operator
+      initContainers:
+        - name: wait-apisix-admin
+          image: busybox:1.28
+          command:
+            - sh
+            - -c
+            - |
+              until nc -z apisix-admin.ingress-apisix.svc.cluster.local 9180; do echo waiting for apisix-admin; sleep 2; done;
+      containers:
+      - name: {{ .Release.Name }}-operator
+        image: {{ .Values.apisixoperatorimage.repository }}
+        imagePullPolicy: {{ .Values.apisixoperatorimage.pullPolicy }}
+      restartPolicy: Never
+  backoffLimit: 3
