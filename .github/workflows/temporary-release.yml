@@ -3,8 +3,7 @@ name: Release Charts
 on:
   push:
     branches:
-      - feature-update-istio-apigatewayssssss
-
+      - feature-update-istio-apigateway
 jobs:
   release:
     runs-on: ubuntu-latest
