@@ -1,0 +1,21 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "0"
+    "helm.sh/resource-policy": keep
+  name: istio-ingress-cert
+  namespace: istio-ingress
+spec:
+  secretName: istio-ingress-cert
+  duration: 2160h
+  renewBefore: 360h
+  commonName: tmf-canvas-env
+  dnsNames:
+    - "*"
+  issuerRef:
+    name: istio-ingress-cluster-issuer
+    kind: Issuer
