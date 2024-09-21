@@ -3,6 +3,25 @@ entries:
   canvas-api-gateway:
   - apiVersion: v2
     appVersion: v1beta3
+    created: "2024-09-21T17:54:40.621600873Z"
+    dependencies:
+    - condition: kong-gateway-install.enabled
+      name: kong-gateway
+      repository: file://../canvas-api-gateway/kong-gateway
+      version: 0.1.0
+    - condition: apisix-gateway-install.enabled
+      name: apisix-gateway
+      repository: file://../canvas-api-gateway/apisix-gateway
+      version: 0.1.0
+    description: A Helm of helm to orchestrate the ODA API Gateway installation
+    digest: 469f6de78d010f5fc02ea5a0e926596b688107a4a9b23768a67173ad5a7dfe6e
+    name: canvas-api-gateway
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/canvas-api-gateway-210.9.12/canvas-api-gateway-210.9.12.tgz
+    version: 210.9.12
+  - apiVersion: v2
+    appVersion: v1beta3
     created: "2024-09-21T17:33:12.306371266Z"
     dependencies:
     - condition: kong-gateway-install.enabled
@@ -2902,4 +2921,4 @@ entries:
     urls:
     - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/secretsmanagement-operator-0.1.0/secretsmanagement-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-09-21T17:33:12.306681974Z"
+generated: "2024-09-21T17:54:40.62193111Z"
