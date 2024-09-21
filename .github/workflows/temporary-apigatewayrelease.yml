@@ -3,7 +3,7 @@ name: Release Charts
 on:
   push:
     branches:
-      - feature-update-istio-apigatewayasasdasd
+      - feature-update-istio-apigateway
 
 jobs:
   release:
@@ -36,6 +36,5 @@ jobs:
         uses: helm/chart-releaser-action@v1.6.0
         with:
           charts_dir: ./charts
-          skip_existing: true
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
