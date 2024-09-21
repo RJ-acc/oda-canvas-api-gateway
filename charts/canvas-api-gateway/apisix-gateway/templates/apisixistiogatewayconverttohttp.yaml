@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .Release.Name }}-patch-istio-ingress
+  name: {{ .Release.Name }}-patch-component-gateway
   namespace: {{ .Values.namespace }}
   annotations:
     "helm.sh/hook": post-install
