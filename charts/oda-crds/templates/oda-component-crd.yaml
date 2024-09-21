@@ -1863,9 +1863,6 @@ spec:
                         implementation:
                           type: string
                           description: The name of the service where the implementation of the API is found
-                        implementation:
-                          type: string
-                          description: The name of the service where the implementation of the API is found
                         path:
                           type: string
                           description: The path to the root of the API
