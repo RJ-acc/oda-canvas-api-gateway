@@ -33,8 +33,9 @@ jobs:
 
 
       - name: Run chart-releaser
+        working-directory: ./charts/canvas-api-gateway
         uses: helm/chart-releaser-action@v1.6.0
         with:
-          charts_dir: ./charts/canvas-api-gateway/
+          charts_dir: .
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
