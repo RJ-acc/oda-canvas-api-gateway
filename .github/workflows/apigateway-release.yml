@@ -5,7 +5,7 @@ on:
     branches:
       - feature-update-istio-apigateway
   workflow_run:
-    workflows: ["Release Workflow"]
+    workflows: ["Release Charts"]
     types:
       - completed
 
