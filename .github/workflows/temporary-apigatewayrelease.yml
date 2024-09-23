@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - feature-update-istio-apigateway
+  workflow_run:
+    workflows: ["Release Workflow"]
+    types:
+      - completed
 
 jobs:
   release:
