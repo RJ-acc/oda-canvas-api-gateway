@@ -27,7 +27,7 @@ jobs:
           helm dependency update
           cd ../kong-gateway
           helm dependency update
-          cd ..
+          cd ../
           ls -la
           helm dependency update
 
