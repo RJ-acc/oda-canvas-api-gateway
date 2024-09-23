@@ -40,6 +40,5 @@ jobs:
         uses: helm/chart-releaser-action@v1.6.0
         with:
           charts_dir: ./charts/canvas-api-gateway
-          pages_branch: gh-pages-api
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
