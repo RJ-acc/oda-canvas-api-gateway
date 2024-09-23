@@ -3,7 +3,11 @@ name: API Gateway Release Workflow
 on:
   push:
     branches:
-      - master
+      - feature-update-istio-apigateway
+  workflow_run:
+    workflows: ["Release Workflow"]
+    types:
+      - completed
 
 jobs:
   release:
