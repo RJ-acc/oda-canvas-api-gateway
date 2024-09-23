@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - feature-update-istio-apigateway-2
+concurrency:
+  group: chart-release
+  cancel-in-progress: false
+  
 jobs:
   release:
     runs-on: ubuntu-latest
