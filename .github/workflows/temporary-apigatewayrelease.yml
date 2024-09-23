@@ -23,11 +23,14 @@ jobs:
         run: |
           cd ./charts/canvas-api-gateway/combined-api-gateway-chart
           helm dependency update
+          pwd
           # Update dependencies for API gateways
-          cd ../combined-api-gateway-chart/apisix-gateway
+          cd /apisix-gateway
           helm dependency update
+          pwd
           cd ../kong-gateway
           helm dependency update
+          pwd
           cd ../combined-api-gateway-chart/
           helm dependency update
 
