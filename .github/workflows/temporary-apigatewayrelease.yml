@@ -28,12 +28,13 @@ jobs:
           cd ../kong-gateway
           helm dependency update
           cd ../..
+          ls -la
           helm dependency update
 
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
         with:
-          charts_dir: ./charts/combined-api-gateway-chart/
+          charts_dir: ./charts/canvas-api-gateway/
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
