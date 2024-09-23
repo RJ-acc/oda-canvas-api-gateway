@@ -21,20 +21,20 @@ jobs:
 
       - name: Configure Helm
         run: |
-          cd ./charts/canvas-api-gateway
+          cd ./charts/canvas-api-gateway/combined-api-gateway-chart
           helm dependency update
           # Update dependencies for API gateways
-          cd ../canvas-api-gateway/apisix-gateway
+          cd ../combined-api-gateway-chart/apisix-gateway
           helm dependency update
           cd ../kong-gateway
           helm dependency update
-          cd ..
+          cd ../combined-api-gateway-chart/
           helm dependency update
 
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
         with:
-          charts_dir: ./charts
+          charts_dir: ./charts/combined-api-gateway-chart/
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
