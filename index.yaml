@@ -1252,6 +1252,49 @@ entries:
   canvas-oda:
   - apiVersion: v2
     appVersion: v1beta3
+    created: "2024-09-23T05:29:40.666397163Z"
+    dependencies:
+    - name: cert-manager-init
+      repository: file://../cert-manager-init
+      version: 1.0.0
+    - condition: canvas-namespaces.enabled
+      name: canvas-namespaces
+      repository: file://../canvas-namespaces
+      version: 1.0.0
+    - condition: oda-crds.enabled
+      name: oda-crds
+      repository: file://../oda-crds
+      version: 1.1.0
+    - condition: keycloak.enabled
+      name: keycloak
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.0.2
+    - name: controller
+      repository: file://../controller
+      version: 1.1.1
+    - condition: dependentapi-simple-operator.enabled
+      name: dependentapi-simple-operator
+      repository: file://../dependentapi-simple-operator
+      version: 0.2.0
+    - name: secretsmanagement-operator
+      repository: file://../secretsmanagement-operator
+      version: 0.1.0
+    - condition: canvas-vault.enabled
+      name: canvas-vault
+      repository: file://../canvas-vault
+      version: 0.2.0
+    - name: oda-webhook
+      repository: file://../oda-webhook
+      version: 1.1.2
+    description: A Helm of helm to orchestrate the ODA installation
+    digest: 0e1401f0891e58c731bf26ad83038885bdd45a0d0fa430cb55da9584cc25cf75
+    name: canvas-oda
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/canvas-oda-210.9.30/canvas-oda-210.9.30.tgz
+    version: 210.9.30
+  - apiVersion: v2
+    appVersion: v1beta3
     created: "2024-09-23T04:54:16.280491621Z"
     dependencies:
     - name: cert-manager-init
@@ -2378,7 +2421,7 @@ entries:
     version: 1.1.5
   - apiVersion: v2
     appVersion: v1beta3
-    created: "2024-09-06T08:24:45.828856527Z"
+    created: "2024-09-06T08:24:12.226503329Z"
     dependencies:
     - name: cert-manager-init
       repository: file://../cert-manager-init
@@ -2413,7 +2456,7 @@ entries:
       repository: file://../oda-webhook
       version: 1.1.2
     description: A Helm of helm to orchestrate the ODA installation
-    digest: 950a1836ec4feddb74a80cb58e31561ea975937c4475d867b3ed81676da89cb6
+    digest: 411c37825b2ff34f8ef368e0a3ae1082faf6a61813e68e10f4452fa0c4951eb2
     name: canvas-oda
     type: application
     urls:
@@ -2464,7 +2507,7 @@ entries:
     version: 1.1.5-rc6
   - apiVersion: v2
     appVersion: v1beta3
-    created: "2024-09-06T08:24:12.226503329Z"
+    created: "2024-09-06T08:24:45.828856527Z"
     dependencies:
     - name: cert-manager-init
       repository: file://../cert-manager-init
@@ -2499,7 +2542,7 @@ entries:
       repository: file://../oda-webhook
       version: 1.1.2
     description: A Helm of helm to orchestrate the ODA installation
-    digest: 411c37825b2ff34f8ef368e0a3ae1082faf6a61813e68e10f4452fa0c4951eb2
+    digest: 950a1836ec4feddb74a80cb58e31561ea975937c4475d867b3ed81676da89cb6
     name: canvas-oda
     type: application
     urls:
@@ -3069,4 +3112,4 @@ entries:
     urls:
     - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/secretsmanagement-operator-0.1.0/secretsmanagement-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-09-23T04:54:16.280971426Z"
+generated: "2024-09-23T05:29:40.666861243Z"
