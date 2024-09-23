@@ -3,7 +3,7 @@ name: API Gateway Release Workflow
 on:
   push:
     branches:
-      - feature-update-istio-apigateway-ssss
+      - feature-update-istio-apigateway
 
 jobs:
   release:
