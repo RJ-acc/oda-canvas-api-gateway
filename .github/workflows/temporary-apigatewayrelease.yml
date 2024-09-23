@@ -21,8 +21,10 @@ jobs:
 
       - name: Configure Helm
         run: |
-          cd ./charts/canvas-api-gateway/combined-api-gateway-chart
+          ls -la
+          cd ./charts/canvas-api-gateway/combined-api-gateway-chart/
           helm dependency update
+          ls -la
           pwd
           # Update dependencies for API gateways
           cd /apisix-gateway
