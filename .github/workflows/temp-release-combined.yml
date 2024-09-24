@@ -237,7 +237,7 @@ jobs:
           path: |
            /tmp/helm_installation.log
            /tmp/kubernetes_status.log
-	  
+	   
       - name: Delete kind cluster
         if: always()
         run: |
