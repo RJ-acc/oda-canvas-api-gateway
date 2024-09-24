@@ -12,9 +12,6 @@ concurrency:
 jobs:
   release:
     runs-on: ubuntu-latest
-    concurrency:
-      group: gh-pages-deploy
-      cancel-in-progress: false
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -45,3 +42,7 @@ jobs:
           charts_dir: ./charts/canvas-api-gateway
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      # Add a sleep delay to make deploycomplete 
+      - name: Sleep for 120 seconds
+        run: sleep 120
+
