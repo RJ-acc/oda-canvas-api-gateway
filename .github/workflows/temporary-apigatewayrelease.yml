@@ -3,7 +3,7 @@ name: API Gateway Release Workflow
 on:
   push:
     branches:
-      - feature-update-istio-apigateway-2
+      - feature-update-istio-apigateway-212312312
 
 concurrency:
   group: chart-release
