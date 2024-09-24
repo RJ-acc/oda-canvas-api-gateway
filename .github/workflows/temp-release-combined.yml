@@ -228,8 +228,6 @@ jobs:
           kubectl get components -n components | tee -a "$LOG_FILE" || echo "No components found in 'components' namespace." | tee -a "$LOG_FILE"
           helm list --all-namespaces | tee "$HELM_LOG_FILE"
 
-
-                
       - name: Upload Test Report
         uses: actions/upload-artifact@v4
         with:
@@ -237,7 +235,7 @@ jobs:
           path: |
             /tmp/helm_installation.log
             /tmp/kubernetes_status.log
-	   
+      	   
       - name: Delete kind cluster
         if: always()
         run: |
