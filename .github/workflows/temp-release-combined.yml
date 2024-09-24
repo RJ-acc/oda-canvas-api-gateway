@@ -235,8 +235,8 @@ jobs:
         with:
           name: test-report
           path: |
-           /tmp/helm_installation.log
-           /tmp/kubernetes_status.log
+            /tmp/helm_installation.log
+            /tmp/kubernetes_status.log
 	   
       - name: Delete kind cluster
         if: always()
