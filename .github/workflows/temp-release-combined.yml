@@ -208,13 +208,22 @@ jobs:
   
       - name: Check status of deployments
         run: |
+          echo "Waiting for resources to be ready..."
           sleep 90
-          kubectl get all -n canvas
-          kubectl get all -n components
-          kubectl get all -n istio-ingress
-          kubectl get all -n istio-system
-          kubectl get exposedapis -n components
-          kubectl get components -n components
+          echo "Current Kubernetes context:"
+          kubectl config current-context
+          echo "Fetching resources in the 'canvas' namespace:"
+          kubectl get all -n canvas || echo "No resources found in 'canvas' namespace."
+          echo "Fetching resources in the 'components' namespace:"
+          kubectl get all -n components || echo "No resources found in 'components' namespace."
+          echo "Fetching resources in the 'istio-ingress' namespace:"
+          kubectl get all -n istio-ingress || echo "No resources found in 'istio-ingress' namespace."
+          echo "Fetching resources in the 'istio-system' namespace:"
+          kubectl get all -n istio-system || echo "No resources found in 'istio-system' namespace."
+          echo "Fetching ExposedAPIs in the 'components' namespace:"
+          kubectl get exposedapis -n components || echo "No ExposedAPIs found in 'components' namespace."
+          echo "Fetching components in the 'components' namespace:"
+          kubectl get components -n components || echo "No components found in 'components' namespace."
 
 
       
