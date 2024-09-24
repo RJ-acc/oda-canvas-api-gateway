@@ -50,10 +50,6 @@ jobs:
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
-      # Add a sleep delay after releasing charts
-      - name: Sleep for 60 seconds
-        run: sleep 60
-
   release-api-gateway:
     runs-on: ubuntu-latest
     needs: release-charts  # Ensures this job runs after 'release-charts'
@@ -92,7 +88,3 @@ jobs:
           charts_dir: ./charts/canvas-api-gateway
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-
-      # Add a sleep delay to ensure API Gateway deployment is complete
-      - name: Sleep for 60 seconds
-        run: sleep 60
