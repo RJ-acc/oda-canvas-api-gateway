@@ -65,21 +65,21 @@ jobs:
         helm repo update
 
         # Check for the latest version of the cert-manager-init chart
-        latest_cert_manager=$(helm search repo my-repo/cert-manager-init --versions | awk 'NR==2 {print $2}')
+        latest_cert_manager=$(helm search repo oda-canvas-api-gateway/cert-manager-init --versions | awk 'NR==2 {print $2}')
         if [ -z "$latest_cert_manager" ]; then
           echo "Error: cert-manager-init chart release was not successful."
           exit 1
         fi
 
         # Check for the latest version of the canvas-vault chart
-        latest_canvas_vault=$(helm search repo my-repo/canvas-vault --versions | awk 'NR==2 {print $2}')
+        latest_canvas_vault=$(helm search repo oda-canvas-api-gateway/canvas-vault --versions | awk 'NR==2 {print $2}')
         if [ -z "$latest_canvas_vault" ]; then
           echo "Error: canvas-vault chart release was not successful."
           exit 1
         fi
 
         # Check for the latest version of the canvas-oda chart
-        latest_canvas_oda=$(helm search repo my-repo/canvas-oda --versions | awk 'NR==2 {print $2}')
+        latest_canvas_oda=$(helm search repo oda-canvas-api-gateway/canvas-oda --versions | awk 'NR==2 {print $2}')
         if [ -z "$latest_canvas_oda" ]; then
           echo "Error: canvas-oda chart release was not successful."
           exit 1
