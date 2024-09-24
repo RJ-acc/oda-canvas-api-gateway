@@ -54,10 +54,10 @@ jobs:
       - name: Sleep for 60 seconds
         run: sleep 60
 
-  delay-for-canvas-chart-release:
-    runs-on: ubuntu-latest
-    needs: release-charts
-    steps:
+delay-for-canvas-chart-release:
+  runs-on: ubuntu-latest
+  needs: release-charts
+  steps:
     - name: Confirm new release was done properly
       run: |
         # Add the required Helm repository
@@ -69,6 +69,8 @@ jobs:
         if [ -z "$latest_cert_manager" ]; then
           echo "Error: cert-manager-init chart release was not successful."
           exit 1
+        else
+          echo "cert-manager-init chart released successfully. Version: $latest_cert_manager"
         fi
 
         # Check for the latest version of the canvas-vault chart
@@ -76,6 +78,8 @@ jobs:
         if [ -z "$latest_canvas_vault" ]; then
           echo "Error: canvas-vault chart release was not successful."
           exit 1
+        else
+          echo "canvas-vault chart released successfully. Version: $latest_canvas_vault"
         fi
 
         # Check for the latest version of the canvas-oda chart
@@ -83,9 +87,16 @@ jobs:
         if [ -z "$latest_canvas_oda" ]; then
           echo "Error: canvas-oda chart release was not successful."
           exit 1
+        else
+          echo "canvas-oda chart released successfully. Version: $latest_canvas_oda"
         fi
 
         echo "All charts released successfully."
+        
+      # Adding a sleep delay after releasing canvas chart
+      - name: Sleep for 60 seconds
+        run: sleep 60
+
 
       
   release-api-gateway:
