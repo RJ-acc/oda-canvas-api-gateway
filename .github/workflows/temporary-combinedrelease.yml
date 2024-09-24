@@ -54,39 +54,38 @@ jobs:
       - name: Sleep for 60 seconds
         run: sleep 60
 
-delay-for-canvas-chart-release:
-  runs-on: ubuntu-latest
-  needs: release-charts
-  steps:
-    - name: Confirm all dependent packages are present
+  delay-for-canvas-chart-release:
+    runs-on: ubuntu-latest
+    needs: release-charts
+    steps:
+    - name: Confirm new release was done properly
       run: |
-        # Check dependencies for cert-manager-init chart
-        cd ./charts/cert-manager-init
-        helm dependency list
-        if helm dependency list | grep "missing"; then
-          echo "Error: Missing dependencies for cert-manager-init chart."
-          exit 1
-        fi
-        cd ../../
+        # Add the required Helm repository
+        helm repo add my-repo https://my-helm-repo-url.com
+        helm repo update
 
-        # Check dependencies for canvas-vault chart
-        cd ./charts/canvas-vault
-        helm dependency list
-        if helm dependency list | grep "missing"; then
-          echo "Error: Missing dependencies for canvas-vault chart."
+        # Check for the latest version of the cert-manager-init chart
+        latest_cert_manager=$(helm search repo my-repo/cert-manager-init --versions | awk 'NR==2 {print $2}')
+        if [ -z "$latest_cert_manager" ]; then
+          echo "Error: cert-manager-init chart release was not successful."
           exit 1
         fi
-        cd ../../
 
-        # Check dependencies for canvas-oda chart
-        cd ./charts/canvas-oda
-        helm dependency list
-        if helm dependency list | grep "missing"; then
-          echo "Error: Missing dependencies for canvas-oda chart."
+        # Check for the latest version of the canvas-vault chart
+        latest_canvas_vault=$(helm search repo my-repo/canvas-vault --versions | awk 'NR==2 {print $2}')
+        if [ -z "$latest_canvas_vault" ]; then
+          echo "Error: canvas-vault chart release was not successful."
           exit 1
         fi
-        cd ../../
-        echo "All chart dependencies are present and resolved successfully."
+
+        # Check for the latest version of the canvas-oda chart
+        latest_canvas_oda=$(helm search repo my-repo/canvas-oda --versions | awk 'NR==2 {print $2}')
+        if [ -z "$latest_canvas_oda" ]; then
+          echo "Error: canvas-oda chart release was not successful."
+          exit 1
+        fi
+
+        echo "All charts released successfully."
 
       
   release-api-gateway:
