@@ -3,6 +3,25 @@ entries:
   canvas-api-gateway:
   - apiVersion: v2
     appVersion: v1beta3
+    created: "2024-09-24T15:23:09.705886915Z"
+    dependencies:
+    - condition: kong-gateway-install.enabled
+      name: kong-gateway
+      repository: file://../canvas-api-gateway/kong-gateway
+      version: 0.1.0
+    - condition: apisix-gateway-install.enabled
+      name: apisix-gateway
+      repository: file://../canvas-api-gateway/apisix-gateway
+      version: 0.1.0
+    description: A Helm of helm to orchestrate the ODA API Gateway installation
+    digest: ece72a9e4c890de82193f27fa3c8176caf7dcb627523bdc7cbd1507fba89981c
+    name: canvas-api-gateway
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/canvas-api-gateway-210.9.100/canvas-api-gateway-210.9.100.tgz
+    version: 210.9.100
+  - apiVersion: v2
+    appVersion: v1beta3
     created: "2024-09-24T12:35:38.400606609Z"
     dependencies:
     - condition: kong-gateway-install.enabled
@@ -1459,6 +1478,49 @@ entries:
     - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/canvas-namespaces-1.0.0/canvas-namespaces-1.0.0.tgz
     version: 1.0.0
   canvas-oda:
+  - apiVersion: v2
+    appVersion: v1beta3
+    created: "2024-09-24T15:23:09.955882946Z"
+    dependencies:
+    - name: cert-manager-init
+      repository: file://../cert-manager-init
+      version: 1.0.0
+    - condition: canvas-namespaces.enabled
+      name: canvas-namespaces
+      repository: file://../canvas-namespaces
+      version: 1.0.0
+    - condition: oda-crds.enabled
+      name: oda-crds
+      repository: file://../oda-crds
+      version: 1.1.0
+    - condition: keycloak.enabled
+      name: keycloak
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.0.2
+    - name: controller
+      repository: file://../controller
+      version: 1.1.1
+    - condition: dependentapi-simple-operator.enabled
+      name: dependentapi-simple-operator
+      repository: file://../dependentapi-simple-operator
+      version: 0.2.0
+    - name: secretsmanagement-operator
+      repository: file://../secretsmanagement-operator
+      version: 0.1.0
+    - condition: canvas-vault.enabled
+      name: canvas-vault
+      repository: file://../canvas-vault
+      version: 0.2.0
+    - name: oda-webhook
+      repository: file://../oda-webhook
+      version: 1.1.2
+    description: A Helm of helm to orchestrate the ODA installation
+    digest: a879702dbeb94d4a3776e350eefab96fddada47c978720ac3d0baf006ac3e861
+    name: canvas-oda
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/canvas-oda-210.9.100/canvas-oda-210.9.100.tgz
+    version: 210.9.100
   - apiVersion: v2
     appVersion: v1beta3
     created: "2024-09-24T12:33:07.618483841Z"
@@ -3837,4 +3899,4 @@ entries:
     urls:
     - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/secretsmanagement-operator-0.1.0/secretsmanagement-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-09-24T12:35:38.400973907Z"
+generated: "2024-09-24T15:23:09.956230324Z"
