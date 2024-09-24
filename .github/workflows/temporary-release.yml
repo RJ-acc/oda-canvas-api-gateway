@@ -3,7 +3,7 @@ name: Release Charts
 on:
   push:
     branches:
-      - feature-update-istio-apigateway-2
+      - feature-update-istio-apigateway-212312321
 concurrency:
   group: chart-release
   cancel-in-progress: false
