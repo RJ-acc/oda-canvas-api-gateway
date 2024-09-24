@@ -54,11 +54,40 @@ jobs:
       - name: Sleep for 60 seconds
         run: sleep 60
 
-  delay-for-canvas-chart-release:
-    runs-on: ubuntu-latest
-    needs: release-charts
-    steps:
-      - name: sleep 60
+delay-for-canvas-chart-release:
+  runs-on: ubuntu-latest
+  needs: release-charts
+  steps:
+    - name: Confirm all dependent packages are present
+      run: |
+        # Check dependencies for cert-manager-init chart
+        cd ./charts/cert-manager-init
+        helm dependency list
+        if helm dependency list | grep "missing"; then
+          echo "Error: Missing dependencies for cert-manager-init chart."
+          exit 1
+        fi
+        cd ../../
+
+        # Check dependencies for canvas-vault chart
+        cd ./charts/canvas-vault
+        helm dependency list
+        if helm dependency list | grep "missing"; then
+          echo "Error: Missing dependencies for canvas-vault chart."
+          exit 1
+        fi
+        cd ../../
+
+        # Check dependencies for canvas-oda chart
+        cd ./charts/canvas-oda
+        helm dependency list
+        if helm dependency list | grep "missing"; then
+          echo "Error: Missing dependencies for canvas-oda chart."
+          exit 1
+        fi
+        cd ../../
+        echo "All chart dependencies are present and resolved successfully."
+
       
   release-api-gateway:
     runs-on: ubuntu-latest
