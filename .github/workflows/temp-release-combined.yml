@@ -183,9 +183,9 @@ jobs:
 
       - name: Install Helm chart from Git repo
         run: |
-          helm repo add oda-canvas-api-gateway https://rj-acc.github.io/oda-canvas-api-gateway --devel
+          helm repo add oda-canvas-api-gateway https://rj-acc.github.io/oda-canvas-api-gateway
           helm repo update
-          helm install canvas oda-canvas-api-gateway/canvas-oda -n canvas --create-namespace 
+          helm install canvas oda-canvas-api-gateway/canvas-oda -n canvas --create-namespace --devel
 
       - name: Check if deployment was successful
         run: |
