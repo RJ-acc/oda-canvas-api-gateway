@@ -61,7 +61,7 @@ jobs:
     - name: Confirm new release was done properly
       run: |
         # Add the required Helm repository
-        helm repo add my-repo https://my-helm-repo-url.com
+        helm repo add oda-canvas-api-gateway https://rj-acc.github.io/oda-canvas-api-gateway
         helm repo update
 
         # Check for the latest version of the cert-manager-init chart
