@@ -49,10 +49,20 @@ jobs:
           charts_dir: ./charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      
+      # Adding a sleep delay after releasing charts
+      - name: Sleep for 60 seconds
+        run: sleep 60
 
+  delay-for-canvas-chart-release:
+    runs-on: ubuntu-latest
+    needs: release-charts
+    steps:
+      - name: sleep 60
+      
   release-api-gateway:
     runs-on: ubuntu-latest
-    needs: release-charts  # Ensures this job runs after 'release-charts'
+    needs: delay-for-canvas-chart-release  # Ensures this job runs after 'release-charts and delay 60'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
