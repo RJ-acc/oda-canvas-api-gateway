@@ -1,0 +1,170 @@
+name: API Gateway and Helm Chart Release Workflow
+
+on:
+  push:
+    branches:
+      - feature-update-istio-apigateway
+
+concurrency:
+  group: chart-release
+  cancel-in-progress: false
+
+jobs:
+  release-charts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Configure Helm for general charts
+        run: |
+          # Add required Helm repositories
+          helm repo add jetstack https://charts.jetstack.io
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add hashicorp https://helm.releases.hashicorp.com
+          helm repo update
+          
+          # Update dependencies for cert-manager-init chart
+          cd ./charts/cert-manager-init
+          helm dependency update
+
+          # Update dependencies for canvas-vault chart
+          cd ../canvas-vault
+          helm dependency update
+
+          # Update dependencies for canvas-oda chart
+          cd ../canvas-oda
+          helm dependency update
+
+      - name: Run chart-releaser for Helm Charts
+        uses: helm/chart-releaser-action@v1.6.0
+        with:
+          charts_dir: ./charts
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Sleep for 60 seconds
+        run: sleep 60
+
+  delay-for-canvas-chart-release:
+    runs-on: ubuntu-latest
+    needs: release-charts
+    steps:
+      - name: Confirm new release was done properly
+        run: |
+          # Add the required Helm repository
+          helm repo add oda-canvas-api-gateway https://rj-acc.github.io/oda-canvas-api-gateway
+          helm repo update
+
+          # Check for the latest version of the cert-manager-init chart
+          latest_cert_manager=$(helm search repo oda-canvas-api-gateway/cert-manager-init --versions | awk 'NR==2 {print $2}')
+          if [ -z "$latest_cert_manager" ]; then
+            echo "Error: cert-manager-init chart release was not successful."
+            exit 1
+          else
+            echo "cert-manager-init chart released successfully. Version: $latest_cert_manager"
+          fi
+
+          # Check for the latest version of the canvas-vault chart
+          latest_canvas_vault=$(helm search repo oda-canvas-api-gateway/canvas-vault --versions | awk 'NR==2 {print $2}')
+          if [ -z "$latest_canvas_vault" ]; then
+            echo "Error: canvas-vault chart release was not successful."
+            exit 1
+          else
+            echo "canvas-vault chart released successfully. Version: $latest_canvas_vault"
+          fi
+
+          # Check for the latest version of the canvas-oda chart
+          latest_canvas_oda=$(helm search repo oda-canvas-api-gateway/canvas-oda --versions | awk 'NR==2 {print $2}')
+          if [ -z "$latest_canvas_oda" ]; then
+            echo "Error: canvas-oda chart release was not successful."
+            exit 1
+          else
+            echo "canvas-oda chart released successfully. Version: $latest_canvas_oda"
+          fi
+
+          echo "All charts released successfully."
+
+      - name: Sleep for 60 seconds
+        run: sleep 60
+
+  release-api-gateway:
+    runs-on: ubuntu-latest
+    needs: delay-for-canvas-chart-release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Configure Helm for API Gateway
+        run: |
+          cd ./charts/canvas-api-gateway
+          helm dependency update
+          # Update dependencies for API gateways
+          cd ../canvas-api-gateway/apisix-gateway
+          helm dependency update
+          cd ../kong-gateway
+          helm dependency update
+          cd ..
+          helm dependency update
+
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
+        with:
+          charts_dir: ./charts
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          
+  confirm-api-gateway-release:
+    runs-on: ubuntu-latest
+    needs: release-api-gateway
+    steps:
+      - name: Confirm API Gateway charts were released properly
+        run: |
+          # Check if kong-gateway is enabled and the chart is available
+          if grep -q "kong-gateway-install.enabled=true" values.yaml; then
+            if [ -d "./charts/canvas-api-gateway/kong-gateway" ]; then
+              echo "kong-gateway chart is present locally."
+              kong_version=$(grep 'version:' ./charts/canvas-api-gateway/kong-gateway/Chart.yaml | awk '{print $2}')
+              echo "kong-gateway chart version: $kong_version"
+              helm dependency list ./charts/canvas-api-gateway/kong-gateway
+              echo "kong-gateway chart dependencies confirmed."
+            else
+              echo "Error: kong-gateway chart is missing."
+              exit 1
+            fi
+          else
+            echo "kong-gateway is disabled. Skipping kong-gateway check."
+          fi
+		  
+          # Check if apisix-gateway is enabled and the chart is available
+          if grep -q "apisix-gateway-install.enabled=true" values.yaml; then
+            if [ -d "./charts/canvas-api-gateway/apisix-gateway" ]; then
+              echo "apisix-gateway chart is present locally."
+              apisix_version=$(grep 'version:' ./charts/canvas-api-gateway/apisix-gateway/Chart.yaml | awk '{print $2}')
+              echo "apisix-gateway chart version: $apisix_version"
+              helm dependency list ./charts/canvas-api-gateway/apisix-gateway
+              echo "apisix-gateway chart dependencies confirmed."
+            else
+              echo "Error: apisix-gateway chart is missing."
+              exit 1
+            fi
+          else
+            echo "apisix-gateway is disabled. Skipping apisix-gateway check."
+          fi
+		  
+          echo "All required API Gateway charts are present and verified."
