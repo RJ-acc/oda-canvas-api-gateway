@@ -133,3 +133,34 @@ jobs:
           charts_dir: ./charts/canvas-api-gateway
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          
+  delay-for-canvas-chart-release:
+    runs-on: ubuntu-latest
+    needs: release-api-gateway
+    steps:
+      - name: Confirm API Gateway charts were released properly
+        run: |
+          # Add the required Helm repository
+          helm repo add oda-canvas-api-gateway https://rj-acc.github.io/oda-canvas-api-gateway
+          helm repo update
+
+          # Check for the latest version of the apisix-gateway chart
+          latest_apisix_gateway=$(helm search repo oda-canvas-api-gateway/apisix-gateway --versions | awk 'NR==2 {print $2}')
+          if [ -z "$latest_apisix_gateway" ]; then
+            echo "Error: apisix-gateway chart release was not successful."
+            exit 1
+          else
+            echo "apisix-gateway chart released successfully. Version: $latest_apisix_gateway"
+          fi
+
+          # Check for the latest version of the kong-gateway chart
+          latest_kong_gateway=$(helm search repo oda-canvas-api-gateway/kong-gateway --versions | awk 'NR==2 {print $2}')
+          if [ -z "$latest_kong_gateway" ]; then
+            echo "Error: kong-gateway chart release was not successful."
+            exit 1
+          else
+            echo "kong-gateway chart released successfully. Version: $latest_kong_gateway"
+          fi
+
+          echo "All API Gateway charts released successfully."
+
