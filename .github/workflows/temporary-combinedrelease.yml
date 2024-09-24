@@ -92,10 +92,10 @@ delay-for-canvas-chart-release:
         fi
 
         echo "All charts released successfully."
-        
-      # Adding a sleep delay after releasing canvas chart
-      - name: Sleep for 60 seconds
-        run: sleep 60
+
+    # Adding a sleep delay after confirming canvas chart release
+    - name: Sleep for 60 seconds
+      run: sleep 60
 
 
       
