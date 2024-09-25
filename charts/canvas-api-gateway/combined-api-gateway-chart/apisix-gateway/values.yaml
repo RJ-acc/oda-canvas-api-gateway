@@ -1,3 +1,5 @@
+ssl:
+  enabled: true
 gateway:
   type: LoadBalancer  # Override the service type
 
