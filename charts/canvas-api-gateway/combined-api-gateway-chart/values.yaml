@@ -44,6 +44,9 @@ kong-gateway:
 # Configuration for apisix-gateway installation
 apisix-gateway-install:
   enabled: false  # Enable apisix-gateway if needed
+apisix:
+  ssl:
+    enabled: true
 apisix-gateway:
   apisix:
     ssl:
