@@ -1,6 +1,10 @@
 apisix:
   ssl:
     enabled: true
+apisix-gateway-install:
+  enabled: true
+service:
+  type: LoadBalancer
   gateway:
     type: LoadBalancer  # Override the service type
   ingress-controller:
