@@ -1,14 +1,14 @@
-ssl:
-  enabled: true
-gateway:
-  type: LoadBalancer  # Override the service type
-
-ingress-controller:
-  config:
-    apisix:
-      adminAPIVersion: v3
-  serviceNamespace: ingress-apisix
-  enabled: true   # Explicitly enable the ingress controller
+apisix:
+  ssl:
+    enabled: true
+  gateway:
+    type: LoadBalancer  # Override the service type
+  ingress-controller:
+    config:
+      apisix:
+        adminAPIVersion: v3
+    serviceNamespace: ingress-apisix
+    enabled: true   # Explicitly enable the ingress controller
 
 apisixoperatorreplicaCount: 1
 apisixoperatorimage:
