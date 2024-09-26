@@ -34,11 +34,9 @@ jobs:
           # Update dependencies for cert-manager-init chart
           cd ./charts/cert-manager-init
           helm dependency update
-
           # Update dependencies for canvas-vault chart
           cd ../canvas-vault
           helm dependency update
-
           # Update dependencies for canvas-oda chart
           cd ../canvas-oda
           helm dependency update
@@ -63,7 +61,7 @@ jobs:
           helm repo add oda-canvas-api-gateway https://rj-acc.github.io/oda-canvas-api-gateway
           helm repo update
 
-          # Check for the latest version of the cert-manager-init chart
+          # Checking for the latest version of the cert-manager-init chart
           latest_cert_manager=$(helm search repo oda-canvas-api-gateway/cert-manager-init --versions | awk 'NR==2 {print $2}')
           if [ -z "$latest_cert_manager" ]; then
             echo "Error: cert-manager-init chart release was not successful."
@@ -72,7 +70,7 @@ jobs:
             echo "cert-manager-init chart released successfully. Version: $latest_cert_manager"
           fi
 
-          # Check for the latest version of the canvas-vault chart
+          # Checking for the latest version of the canvas-vault chart
           latest_canvas_vault=$(helm search repo oda-canvas-api-gateway/canvas-vault --versions | awk 'NR==2 {print $2}')
           if [ -z "$latest_canvas_vault" ]; then
             echo "Error: canvas-vault chart release was not successful."
@@ -81,7 +79,7 @@ jobs:
             echo "canvas-vault chart released successfully. Version: $latest_canvas_vault"
           fi
 
-          # Check for the latest version of the canvas-oda chart
+          # Checking for the latest version of the canvas-oda chart
           latest_canvas_oda=$(helm search repo oda-canvas-api-gateway/canvas-oda --versions | awk 'NR==2 {print $2}')
           if [ -z "$latest_canvas_oda" ]; then
             echo "Error: canvas-oda chart release was not successful."
@@ -89,7 +87,6 @@ jobs:
           else
             echo "canvas-oda chart released successfully. Version: $latest_canvas_oda"
           fi
-
           echo "All charts released successfully."
 
       - name: Sleep for 60 seconds
@@ -113,10 +110,13 @@ jobs:
         run: |
           cd ./charts/canvas-api-gateway/combined-api-gateway-chart
           helm dependency update
+          # Update dependencies for apisix-gateway chart
           cd apisix-gateway
+          # Update dependencies for kong-gateway chart
           helm dependency update
           cd ../kong-gateway
           helm dependency update
+          cd ..
           helm dependency update
 
       - name: Run chart-releaser for API Gateway
@@ -182,6 +182,7 @@ jobs:
         run: |
           helm repo add oda-canvas-api-gateway https://rj-acc.github.io/oda-canvas-api-gateway
           helm repo update
+          # This below ensure we are checking current release not only stable release
           helm install canvas oda-canvas-api-gateway/canvas-oda -n canvas --create-namespace --devel
 
       - name: Check if deployment was successful
@@ -244,10 +245,10 @@ jobs:
           echo "Checking the entire Kubernetes log for failures..."
           
           if grep -i -E 'failed|CrashLoopBackOff|error' "$LOG_FILE"; then
-            echo "There are Kubernetes resource failures!"
+            echo "There are Kubernetes resource failures in this release!"
             exit 1
           else
-            echo "OK, no Kubernetes resource failures."
+            echo "OK, no Kubernetes resource failures observed."
           fi
 
       - name: Check Helm installation status
@@ -256,8 +257,8 @@ jobs:
           echo "Checking the entire Helm log for failures..."
           
           if grep -i -E 'failed|error' "$HELM_LOG_FILE"; then
-            echo "There are Helm installation failures!"
+            echo "There are Helm installation failures in this release!"
             exit 1
           else
-            echo "OK, no Helm installation failures."
+            echo "OK, no Helm installation failures observed with this release."
           fi
