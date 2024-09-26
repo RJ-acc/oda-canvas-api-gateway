@@ -226,11 +226,6 @@ jobs:
           path: |
             /tmp/helm_installation.log
             /tmp/kubernetes_status.log
-  
-      - name: Delete kind cluster
-        if: always()
-        run: |
-          kind delete cluster
         
       - name: Check Kubernetes resource status
         run: |
@@ -278,3 +273,8 @@ jobs:
           else
             echo "Helm installation completed successfully with no failures."
           fi
+          
+      - name: Delete kind cluster
+        if: always()
+        run: |
+          kind delete cluster
