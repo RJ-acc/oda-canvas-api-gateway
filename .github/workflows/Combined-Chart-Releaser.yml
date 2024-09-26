@@ -180,7 +180,7 @@ jobs:
         run: |
           helm repo add oda-canvas-api-gateway https://rj-acc.github.io/oda-canvas-api-gateway
           helm repo update
-          # This below ensure we are checking current release not only stable release
+          # This below --devel ensure we are checking current release not only stable release
           helm install canvas oda-canvas-api-gateway/canvas-oda -n canvas --create-namespace --devel
 
       - name: Check if deployment was successful
@@ -192,12 +192,12 @@ jobs:
             exit 1
           fi
   
-      - name: Installing components PC & PI
+      - name: Installing components Product Catalog 
         run: |
           helm repo add oda-components https://tmforum-oda.github.io/reference-example-components/
           helm install pc oda-components/productcatalog -n components
   
-      - name: Check status of deployments
+      - name: Check status of all deployments
         run: |
           echo "Waiting for resources to be ready..."
           sleep 90
@@ -218,14 +218,6 @@ jobs:
           echo "Fetching components in the 'components' namespace:" | tee -a "$LOG_FILE"
           kubectl get components -n components | tee -a "$LOG_FILE" || echo "No components found in 'components' namespace." | tee -a "$LOG_FILE"
           helm list --all-namespaces | tee "$HELM_LOG_FILE"
-
-      - name: Upload Test Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-report
-          path: |
-            /tmp/helm_installation.log
-            /tmp/kubernetes_status.log
         
       - name: Check Kubernetes resource status
         run: |
@@ -273,6 +265,14 @@ jobs:
           else
             echo "Helm installation completed successfully with no failures."
           fi
+
+      - name: Upload Helm Installation Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: |
+            /tmp/helm_installation.log
+            /tmp/kubernetes_status.log
           
       - name: Delete kind cluster
         if: always()
