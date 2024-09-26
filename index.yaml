@@ -4094,6 +4094,16 @@ entries:
   controller:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2024-09-26T13:50:39.098233249Z"
+    description: A helm chart to deploy the component controller
+    digest: b139832820c1396edb420b39296ba849c43a3de1b21e4127e637fc8ae198790e
+    name: controller
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/controller-1.1.2/controller-1.1.2.tgz
+    version: 1.1.2
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2024-08-20T04:07:40.290536801Z"
     description: A helm chart to deploy the component controller
     digest: c7b6c7d1771472b47d3aa2c86f8c86d58bba55f775eb5b7b9fc2eef7d14c13b7
@@ -4223,4 +4233,4 @@ entries:
     urls:
     - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/secretsmanagement-operator-0.1.0/secretsmanagement-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-09-26T10:58:00.706074671Z"
+generated: "2024-09-26T13:50:39.098521105Z"
