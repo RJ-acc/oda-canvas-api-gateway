@@ -3395,6 +3395,49 @@ entries:
     version: 1.1.6
   - apiVersion: v2
     appVersion: v1beta3
+    created: "2024-09-26T14:45:12.242331216Z"
+    dependencies:
+    - name: cert-manager-init
+      repository: file://../cert-manager-init
+      version: 1.0.1
+    - condition: canvas-namespaces.enabled
+      name: canvas-namespaces
+      repository: file://../canvas-namespaces
+      version: 1.0.0
+    - condition: oda-crds.enabled
+      name: oda-crds
+      repository: file://../oda-crds
+      version: 1.1.2
+    - condition: keycloak.enabled
+      name: keycloak
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.0.2
+    - name: controller
+      repository: file://../controller
+      version: 1.1.2
+    - condition: dependentapi-simple-operator.enabled
+      name: dependentapi-simple-operator
+      repository: file://../dependentapi-simple-operator
+      version: 0.2.3
+    - name: secretsmanagement-operator
+      repository: file://../secretsmanagement-operator
+      version: 0.1.0
+    - condition: canvas-vault.enabled
+      name: canvas-vault
+      repository: file://../canvas-vault
+      version: 0.2.0
+    - name: oda-webhook
+      repository: file://../oda-webhook
+      version: 1.1.2
+    description: A Helm of helm to orchestrate the ODA installation
+    digest: e3edcd7a64883570a495776032fb7a74b343955aa34e94126ca263ffdbaffb9d
+    name: canvas-oda
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/canvas-oda-1.1.6-rc3/canvas-oda-1.1.6-rc3.tgz
+    version: 1.1.6-rc3
+  - apiVersion: v2
+    appVersion: v1beta3
     created: "2024-09-20T04:48:23.91373837Z"
     dependencies:
     - name: cert-manager-init
@@ -4183,6 +4226,16 @@ entries:
   oda-crds:
   - apiVersion: v2
     appVersion: v1beta3
+    created: "2024-09-26T14:45:12.43820391Z"
+    description: A helm chart to deploy the Canvas CRDs
+    digest: 587268beff97217276618135fcd92707dadb786c6073d8c756aa16dbc089044f
+    name: oda-crds
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/oda-crds-1.1.2/oda-crds-1.1.2.tgz
+    version: 1.1.2
+  - apiVersion: v2
+    appVersion: v1beta3
     created: "2024-09-20T04:48:24.180339707Z"
     description: A helm chart to deploy the Canvas CRDs
     digest: 5140cd457cfe6a02dd05bcb3178f2e9fbd85571ee31ab4a2f42ee058f6f7d895
@@ -4233,4 +4286,4 @@ entries:
     urls:
     - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/secretsmanagement-operator-0.1.0/secretsmanagement-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-09-26T13:50:39.098521105Z"
+generated: "2024-09-26T14:45:12.438925796Z"
