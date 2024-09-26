@@ -116,9 +116,7 @@ jobs:
           helm dependency update
           cd ../kong-gateway
           helm dependency update
-          cd ..
-          helm dependency update
-
+          
       - name: Run chart-releaser for API Gateway
         uses: helm/chart-releaser-action@v1.6.0
         with:
