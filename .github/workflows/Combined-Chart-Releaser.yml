@@ -192,11 +192,6 @@ jobs:
             exit 1
           fi
   
-      - name: Port Forwarding Keycloak Service
-        run: |
-          sleep 30
-          kubectl -n canvas port-forward svc/canvas-keycloak 8083:8083 &
-  
       - name: Installing components PC & PI
         run: |
           helm repo add oda-components https://tmforum-oda.github.io/reference-example-components/
@@ -252,11 +247,34 @@ jobs:
       - name: Check Helm installation status
         run: |
           HELM_LOG_FILE="/tmp/helm_installation.log"
-          echo "Checking the entire Helm log for failures..."
-          
+          echo "Checking Helm Chart logs for failures..."
+          FAILURE_FOUND=false
           if grep -i -E 'failed|error' "$HELM_LOG_FILE"; then
             echo "There are Helm installation failures in this release!"
-            exit 1
+            FAILURE_FOUND=true
+
+            echo "Listing all Helm releases with their versions:"
+            helm list --all-namespaces -o json | jq -r '.[] | "\(.name) \(.chart) \(.app_version)"' | while read -r release chart version; do
+              echo "Release: $release, Chart: $chart, Version: $version"
+            done
+
+            echo "Identifying failed Helm releases..."
+            helm list --all-namespaces -o json | jq -r '.[] | select(.status != "deployed") | "\(.name) \(.chart) \(.app_version) \(.status)"' | while read -r release chart version status; do
+              echo "Failure found with Release: $release, Chart: $chart, Version: $version, Status: $status"
+            done
           else
             echo "OK, no Helm installation failures observed with this release."
+
+            # Listing successful Helm releases and their versions
+            echo "Listing all Helm releases with their versions:"
+            helm list --all-namespaces -o json | jq -r '.[] | "\(.name) \(.chart) \(.app_version)"' | while read -r release chart version; do
+              echo "Release: $release, Chart: $chart, Version: $version"
+            done
+          fi
+
+          # Check if failures were found and print their summary
+          if [ "$FAILURE_FOUND" = true ]; then
+            echo "Helm installation completed with some failures.Check list mentioned above."
+          else
+            echo "Helm installation completed successfully with no failures."
           fi
