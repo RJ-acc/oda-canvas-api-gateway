@@ -113,11 +113,11 @@ jobs:
           
       - name: Install trivy scanner and perform security scan
         run:
-          sudo apt-get install wget apt-transport-https gnupg lsb-release -y
-          wget -qO- https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo tee /etc/apt/trusted.gpg.d/aquasecurity.asc
+          sudo apt-get update && sudo apt-get install -y wget apt-transport-https gnupg lsb-release
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo tee /etc/apt/trusted.gpg.d/aquasecurity.asc
           echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/trivy.list
           sudo apt-get update
-          sudo apt-get install trivy -y
+          sudo apt-get install -y trivy
           log_file="/tmp/trivy_scan.log"
           
           images=$(kubectl get deployments -n canvas -o=jsonpath='{range .items[*]}{range .spec.template.spec.containers[*]}{.image}{"\n"}{end}')
