@@ -110,13 +110,32 @@ jobs:
           else
             echo "OK, no Kubernetes resource failures observed."
           fi
+          
+      - name: Install trivy scanner and perform security scan
+        run:
+          sudo apt-get install wget apt-transport-https gnupg lsb-release
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+          echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install trivy
+          log_file="trivy_scan.log"
+          > $log_file
+          
+          images=$(kubectl get deployments -n canvas -o=jsonpath='{range .items[*]}{range .spec.template.spec.containers[*]}{.image}{"\n"}{end}')
+          
+          for image in $images; do
+            echo "Scanning image:$image" | tee -a $log_file
+            trivy image $image | tee -a $log_file
+          done
 
+        
       - name: Upload Helm Installation Reports
         uses: actions/upload-artifact@v4
         with:
           name: test-report
           path: |
             /tmp/kubernetes_status.log
+            trivy_scan.log
           
       - name: Delete kind cluster
         if: always()
