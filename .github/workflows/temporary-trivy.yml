@@ -118,6 +118,7 @@ jobs:
           echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/trivy.list
           sudo apt-get update
           sudo apt-get install -y trivy
+          export TRIVY_DISABLE_VEX_NOTICE=true
           log_file="/tmp/trivy_scan.log"
           
           images=$(kubectl get deployments -n canvas -o=jsonpath='{range .items[*]}{range .spec.template.spec.containers[*]}{.image}{"\n"}{end}')
