@@ -5,7 +5,7 @@ metadata:
   annotations:
     # This is what defines this resource as a hook. Without this line, the
     # job is considered part of the release.
-    "helm.sh/hook": post-install
+    "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-weight": "5"
     "helm.sh/resource-policy": keep
   name: component-gateway
@@ -19,16 +19,16 @@ spec:
       name: http
       protocol: HTTP
     tls:
-      httpsRedirect: true
+      httpsRedirect: {{ .Values.deployment.httpsRedirect }}
     hosts:
-    - "*"
+    - "{{ .Values.deployment.hostName }}"
   - port:
       number: 443
       name: https
       protocol: HTTPS
     tls:
       mode: SIMPLE
-      credentialName: istio-ingress-cert  
+      credentialName: {{ .Values.deployment.credentialName }}  
     hosts:
-    - "*"
+    - "{{ .Values.deployment.hostName }}"
 {{ end }}
