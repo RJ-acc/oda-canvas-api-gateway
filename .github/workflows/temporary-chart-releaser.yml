@@ -3,7 +3,7 @@ name: API Gateway and Helm Chart Release Workflow
 on:
   push:
     branches:
-      - istio-byoc-check-xxxx
+      - istio-byoc-check
 
 concurrency:
   group: chart-release
