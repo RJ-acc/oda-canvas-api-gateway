@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: pre-uninstall-component-check
+  namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook" : pre-delete
     "helm.sh/weight" : "-10"
