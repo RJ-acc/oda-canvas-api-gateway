@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook" : pre-delete
-    "helm.sh/weight" : "-10"
+    "helm.sh/weight" : "0"
     "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   template:
