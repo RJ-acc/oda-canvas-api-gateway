@@ -4,7 +4,7 @@ metadata:
   name: pre-uninstall-component-check
   annotations:
     "helm.sh/hook" : pre-delete
-    "helm.sh/weight" : "0"
+    "helm.sh/weight" : "-10"
     "helm.sh/hook-delete-policy": hook-succeeded,hook-failed
 spec:
   template:
@@ -18,9 +18,10 @@ spec:
             - -c
             - |
               echo "Checking for component Custom Resources (CRs) in the canvas cluster..."
-              if kubectl get <your-component-crd> -A | grep -q "<component-name>"; then
-                echo "Error: Component CRs are present in the cluster. Uninstallation aborted."
-                exit 1  #Exits to prevent Helm from proceeding
+              if [ $(kubectl get components.oda.tmforum.org -A | wc -l) -gt 1 ]; then
+                echo "Error: Uninstallation aborted as below components present."
+                kubectl get components.oda.tmforum.org -A
+                exit 1  #Prevent Helm from proceeding
               else
                 echo "No component CRs found. Proceeding with uninstallation."
               fi
