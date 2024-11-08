@@ -280,4 +280,6 @@ oda-webhook:
   version: 0.11.0
   prereleaseSuffix:  
   imagePullPolicy: IfNotPresent
+
+componentResource: "components.oda.tmforum.org"
  
