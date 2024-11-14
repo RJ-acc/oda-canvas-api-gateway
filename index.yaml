@@ -2941,6 +2941,52 @@ entries:
     version: 20.1.4
   - apiVersion: v2
     appVersion: v1beta4
+    created: "2024-11-14T09:26:50.668363081Z"
+    dependencies:
+    - name: cert-manager-init
+      repository: file://../cert-manager-init
+      version: 1.0.2
+    - condition: canvas-namespaces.enabled
+      name: canvas-namespaces
+      repository: file://../canvas-namespaces
+      version: 1.0.1
+    - condition: oda-crds.enabled
+      name: oda-crds
+      repository: file://../oda-crds
+      version: 1.1.4
+    - condition: keycloak.enabled
+      name: keycloak
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.0.2
+    - name: component-operator
+      repository: file://../component-operator
+      version: 1.2.0
+    - name: api-operator-istio
+      repository: file://../api-operator-istio
+      version: 1.0.1
+    - condition: dependentapi-simple-operator.enabled
+      name: dependentapi-simple-operator
+      repository: file://../dependentapi-simple-operator
+      version: 0.2.3
+    - name: secretsmanagement-operator
+      repository: file://../secretsmanagement-operator
+      version: 0.1.2
+    - condition: canvas-vault.enabled
+      name: canvas-vault
+      repository: file://../canvas-vault
+      version: 0.2.1
+    - name: oda-webhook
+      repository: file://../oda-webhook
+      version: 1.1.4
+    description: A Helm of helm to orchestrate the ODA installation
+    digest: 3d8b7124bbea00f9edffad306189d9428d97f13e27ce1548e2eccf18eebbf1c2
+    name: canvas-oda
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/canvas-oda-10.11.21/canvas-oda-10.11.21.tgz
+    version: 10.11.21
+  - apiVersion: v2
+    appVersion: v1beta4
     created: "2024-11-07T12:06:13.11257659Z"
     dependencies:
     - name: cert-manager-init
@@ -4563,4 +4609,4 @@ entries:
     urls:
     - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/secretsmanagement-operator-0.1.0/secretsmanagement-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-11-07T12:06:13.112915626Z"
+generated: "2024-11-14T09:26:50.668749944Z"
