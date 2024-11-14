@@ -26,7 +26,7 @@ appVersion: "v1beta4"
 
 dependencies:
   - name: kong-gateway
-    version: "0.1.11"
+    version: "0.1.13"
     repository: 'file://../combined-api-gateway-chart/kong-gateway'
     condition: kong-gateway-install.enabled
   - name: apisix-gateway
