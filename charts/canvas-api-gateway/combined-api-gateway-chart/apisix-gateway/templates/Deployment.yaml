@@ -7,7 +7,7 @@ spec:
   replicas: {{ .Values.apisixoperatorreplicaCount }}
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-operator
+      app: apioperator-account
   template:
     metadata:
       labels:
