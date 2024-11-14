@@ -3,7 +3,7 @@ name: API Gateway and Helm Chart Release Workflow
 on:
   push:
     branches:
-      - main
+      - 233-upgrade-api-gateways
 
 concurrency:
   group: chart-release
