@@ -7,13 +7,13 @@ spec:
   replicas: {{ .Values.apisixoperatorreplicaCount }}
   selector:
     matchLabels:
-      app: apioperator-account
+      app: {{ .Release.Name }}-operator
   template:
     metadata:
       labels:
         app: {{ .Release.Name }}-operator
     spec:
-      serviceAccountName: {{ .Release.Name }}-operator
+      serviceAccountName: apioperator-account
       initContainers:
         - name: wait-apisix-admin
           image: busybox:1.28
