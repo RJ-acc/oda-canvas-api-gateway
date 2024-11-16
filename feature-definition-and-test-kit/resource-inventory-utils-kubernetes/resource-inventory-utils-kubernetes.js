@@ -255,6 +255,6 @@ const resourceInventoryUtils = {
     console.log(controllerLogs.body)
     return controllerLogs.body
   }
-} 
+}
 
 module.exports = resourceInventoryUtils
