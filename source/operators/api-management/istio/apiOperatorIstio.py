@@ -20,14 +20,25 @@ from kubernetes.client.rest import ApiException
 import os
 import re
 
+# Setup logging
 logging_level = os.environ.get("LOGGING", logging.INFO)
-
 kopf_logger = logging.getLogger()
 kopf_logger.setLevel(logging.WARNING)
-
 logger = logging.getLogger("APIOperator")
 logger.setLevel(int(logging_level))
 logger.info(f"Logging set to %s", logging_level)
+
+CICD_BUILD_TIME = os.getenv("CICD_BUILD_TIME")
+GIT_COMMIT_SHA = os.getenv("GIT_COMMIT_SHA")
+if CICD_BUILD_TIME:
+    logger.info(f"CICD_BUILD_TIME=%s", CICD_BUILD_TIME)
+if GIT_COMMIT_SHA:
+    logger.info(f"GIT_COMMIT_SHA=%s", GIT_COMMIT_SHA)
+
+
+# get namespace to monitor
+component_namespace = os.environ.get("COMPONENT_NAMESPACE", "components")
+logger.info(f"Monitoring namespace %s", component_namespace)
 
 HTTP_SCHEME = "https://"
 HTTP_K8s_LABELS = ["http", "http2"]
@@ -60,6 +71,12 @@ if APIOPERATORISTIO_PUBLICHOSTNAME:
         publichostname_loadBalancer = {
             "ingress": [{"hostname": APIOPERATORISTIO_PUBLICHOSTNAME}]
         }
+
+
+# try to recover from broken watchers https://github.com/nolar/kopf/issues/1036
+@kopf.on.startup()
+def configure(settings: kopf.OperatorSettings, **_):
+    settings.watching.server_timeout = 1 * 60
 
 
 @kopf.on.create(GROUP, VERSION, APIS_PLURAL, retries=5)
@@ -109,25 +126,7 @@ def apiStatus(meta, spec, status, namespace, labels, name, **kwargs):
                 and spec["port"] == apiStatus["port"]
                 and spec["implementation"] == apiStatus["implementation"]
             ):
-                # unchanged, so just return previous status
-                logWrapper(
-                    logging.INFO,
-                    "apiStatus",
-                    "apiStatus",
-                    "api/" + name,
-                    componentName,
-                    name,
-                    meta["generation"],
-                )
-                logWrapper(
-                    logging.INFO,
-                    "apiStatus",
-                    "apiStatus",
-                    "api/" + name,
-                    componentName,
-                    name,
-                    "Unchanged",
-                )
+                # no change in the api so return the existing status
                 return None
             else:
                 logWrapper(
@@ -1153,15 +1152,6 @@ async def updateAPIStatus(meta, status, namespace, name, **kwargs):
 
     :meta public:
     """
-    logWrapper(
-        logging.INFO,
-        "updateAPIStatus",
-        "updateAPIStatus",
-        "api/" + name,
-        "",
-        name,
-        meta["generation"],
-    )
 
     if "apiStatus" in status.keys():
         if "url" in status["apiStatus"].keys():
@@ -1299,9 +1289,6 @@ async def updateAPIReady(meta, status, namespace, name, **kwargs):
 
     :meta public:
     """
-    logWrapper(
-        logging.INFO, "updateAPIReady", "", "api/" + name, "", name, meta["generation"]
-    )
 
     if "ready" in status["implementation"].keys():
         if status["implementation"]["ready"] == True:
