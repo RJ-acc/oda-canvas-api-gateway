@@ -9,7 +9,7 @@ ingress-controller:
   enabled: true   # Explicitly enable the ingress controller
 
 apisixoperatorreplicaCount: 1
-apisixistio-operatordeploymentnamespace: canvas
+apisixistiooperatordeploymentnamespace: canvas
 apisixoperatorimage:
   repository: ravijangra92/apisix-operator:7.8.0
   pullPolicy: IfNotPresent
