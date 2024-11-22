@@ -13,7 +13,7 @@ spec:
       labels:
         app: {{ .Release.Name }}-operator
     spec:
-      serviceAccountName: {{ .Release.Name }}-operator
+      serviceAccountName: {{ .Release.Name }}-kong-operator
       initContainers:
         - name: wait-kong-admin
           image: busybox:1.28
