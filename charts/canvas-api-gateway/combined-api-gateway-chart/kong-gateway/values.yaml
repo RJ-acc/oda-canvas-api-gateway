@@ -85,7 +85,7 @@ kong:
     admissionWebhook:
       enabled: true
 kongoperatorreplicaCount: 1
-kongistio-operatordeploymentnamespace: canvas
+kongistiooperatordeploymentnamespace: canvas
 kongoperatorimage:
   repository: ravijangra92/kong-operator:7.8.0
   pullPolicy: IfNotPresent
