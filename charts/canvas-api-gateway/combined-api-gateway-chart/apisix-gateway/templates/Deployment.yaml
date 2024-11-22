@@ -13,7 +13,7 @@ spec:
       labels:
         app: {{ .Release.Name }}-operator
     spec:
-      serviceAccountName: {{ .Release.Name }}-operator
+      serviceAccountName: {{ .Release.Name }}-apisix-operator
       initContainers:
         - name: wait-apisix-admin
           image: busybox:1.28
