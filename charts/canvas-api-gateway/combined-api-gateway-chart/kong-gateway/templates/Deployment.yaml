@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}-operator
-  namespace: kong
+  namespace: {{ .Values.kongistio-operatordeploymentnamespace }}
 spec:
   replicas: {{ .Values.kongoperatorreplicaCount }}
   selector:
