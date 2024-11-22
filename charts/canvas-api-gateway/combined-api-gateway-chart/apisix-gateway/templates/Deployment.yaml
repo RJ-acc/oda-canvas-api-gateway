@@ -13,7 +13,6 @@ spec:
       labels:
         app: {{ .Release.Name }}-operator
     spec:
-      serviceAccountName: {{ .Release.Name }}-operator
       containers:
       - name: {{ .Release.Name }}-operator
         image: {{ .Values.apisixoperatorimage.repository }}
