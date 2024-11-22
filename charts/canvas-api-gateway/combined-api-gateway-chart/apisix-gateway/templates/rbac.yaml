@@ -44,7 +44,7 @@ rules:
 - apiGroups: [""]  
   resources: ["services"]
   verbs: ["get", "list", "patch", "update"]
-  resourceNames: ["istio-ingress"] 
+  resourceNames: ["istio-ingress", "apisix-admin"] 
 - apiGroups: ["networking.istio.io"]
   resources: ["gateways"]
   verbs: ["get", "patch", "update"]
