@@ -37,6 +37,7 @@ kong-gateway:
         enabled: true
         type: LoadBalancer
     kongoperatorreplicaCount: 1
+    apioperatordeploymentnamespace: canvas
     kongoperatorimage:
       repository: ravijangra92/kong-operator:7.8.0
       pullPolicy: IfNotPresent
