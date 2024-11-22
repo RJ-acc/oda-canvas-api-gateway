@@ -124,6 +124,6 @@ subjects:
   name: {{ .Release.Name }}-apisix-operator
   namespace: {{ .Values.apisixistiooperatordeploymentnamespace }}
 roleRef:
-  kind: Role
+  kind: ClusterRole
   name: {{ .Release.Name }}-apisix-check-role
   apiGroup: rbac.authorization.k8s.io
