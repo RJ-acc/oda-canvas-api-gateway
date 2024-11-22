@@ -61,6 +61,7 @@ apisix-gateway:
     service:
       type: LoadBalancer  # Override the service type
     apisixoperatorreplicaCount: 1
+    apioperatordeploymentnamespace: canvas
     apisixoperatorimage:
       repository: ravijangra92/apisix-operator:7.8.0
       pullPolicy: IfNotPresent
