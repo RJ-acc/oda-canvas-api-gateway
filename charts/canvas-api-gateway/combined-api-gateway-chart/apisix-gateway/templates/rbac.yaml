@@ -4,12 +4,6 @@ metadata:
   name: {{ .Release.Name }}-operator
   namespace: ingress-apisix
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: {{ .Release.Name }}-apisix-operator
-  namespace: {{ .Values.apisixistiooperatordeploymentnamespace }}
----
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -58,9 +52,6 @@ subjects:
 - kind: ServiceAccount
   name: {{ .Release.Name }}-operator
   namespace: ingress-apisix
-- kind: ServiceAccount
-  name: {{ .Release.Name }}-apisix-operator
-  namespace: {{ .Values.apisixistiooperatordeploymentnamespace }}
 roleRef:
   kind: Role
   name: {{ .Release.Name }}-operator-role-components
@@ -75,12 +66,23 @@ subjects:
 - kind: ServiceAccount
   name: {{ .Release.Name }}-operator
   namespace: ingress-apisix
+roleRef:
+  kind: Role
+  name: {{ .Release.Name }}-operator-role-istio-ingress
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Release.Name }}-operator-rolebinding-components
+  namespace: {{ .Values.apisixistiooperatordeploymentnamespace }}
+subjects:
 - kind: ServiceAccount
   name: {{ .Release.Name }}-apisix-operator
   namespace: {{ .Values.apisixistiooperatordeploymentnamespace }}
 roleRef:
   kind: Role
-  name: {{ .Release.Name }}-operator-role-istio-ingress
+  name: {{ .Release.Name }}-operator-role-components
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -91,10 +93,37 @@ subjects:
 - kind: ServiceAccount
   name: {{ .Release.Name }}-operator
   namespace: ingress-apisix
+roleRef:
+  kind: ClusterRole
+  name: {{ .Release.Name }}-operator-clusterrole
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Release.Name }}-apisix-operator
+  namespace: {{ .Values.apisixistiooperatordeploymentnamespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ .Release.Name }}-apisix-check-role
+  namespace: ingress-apisix
+rules:
+- apiGroups: [""]
+  resources: ["services", "endpoints"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Release.Name }}-apisix-check-rolebinding
+  namespace: ingress-apisix
+subjects:
 - kind: ServiceAccount
   name: {{ .Release.Name }}-apisix-operator
   namespace: {{ .Values.apisixistiooperatordeploymentnamespace }}
 roleRef:
-  kind: ClusterRole
-  name: {{ .Release.Name }}-operator-clusterrole
+  kind: Role
+  name: {{ .Release.Name }}-apisix-check-role
   apiGroup: rbac.authorization.k8s.io
