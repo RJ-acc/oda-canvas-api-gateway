@@ -12,6 +12,7 @@ spec:
     metadata:
       labels:
         app: {{ .Release.Name }}-operator
+    serviceAccountName: apioperator-account
     spec:
       containers:
       - name: {{ .Release.Name }}-operator
