@@ -4,6 +4,12 @@ metadata:
   name: {{ .Release.Name }}-operator
   namespace: ingress-apisix
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Release.Name }}-apisix-operator
+  namespace: {{ .Values.apisixistiooperatordeploymentnamespace }}
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -52,6 +58,9 @@ subjects:
 - kind: ServiceAccount
   name: {{ .Release.Name }}-operator
   namespace: ingress-apisix
+- kind: ServiceAccount
+  name: {{ .Release.Name }}-apisix-operator
+  namespace: {{ .Values.apisixistiooperatordeploymentnamespace }}
 roleRef:
   kind: Role
   name: {{ .Release.Name }}-operator-role-components
@@ -66,6 +75,9 @@ subjects:
 - kind: ServiceAccount
   name: {{ .Release.Name }}-operator
   namespace: ingress-apisix
+- kind: ServiceAccount
+  name: {{ .Release.Name }}-apisix-operator
+  namespace: {{ .Values.apisixistiooperatordeploymentnamespace }}
 roleRef:
   kind: Role
   name: {{ .Release.Name }}-operator-role-istio-ingress
@@ -79,6 +91,9 @@ subjects:
 - kind: ServiceAccount
   name: {{ .Release.Name }}-operator
   namespace: ingress-apisix
+- kind: ServiceAccount
+  name: {{ .Release.Name }}-apisix-operator
+  namespace: {{ .Values.apisixistiooperatordeploymentnamespace }}
 roleRef:
   kind: ClusterRole
   name: {{ .Release.Name }}-operator-clusterrole
