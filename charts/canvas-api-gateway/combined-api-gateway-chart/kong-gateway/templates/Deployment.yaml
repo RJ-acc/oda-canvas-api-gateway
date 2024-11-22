@@ -12,8 +12,8 @@ spec:
     metadata:
       labels:
         app: {{ .Release.Name }}-operator
-    serviceAccountName: apioperator-account
     spec:
+      serviceAccountName: apioperator-account
       containers:
       - name: {{ .Release.Name }}-operator
         image: {{ .Values.kongoperatorimage.repository }}
