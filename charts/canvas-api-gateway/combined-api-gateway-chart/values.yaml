@@ -37,7 +37,7 @@ kong-gateway:
         enabled: true
         type: LoadBalancer
     kongoperatorreplicaCount: 1
-    kongistio-operatordeploymentnamespace: canvas
+    kongistiooperatordeploymentnamespace: canvas
     kongoperatorimage:
       repository: ravijangra92/kong-operator:7.8.0
       pullPolicy: IfNotPresent
@@ -62,7 +62,7 @@ apisix-gateway:
     service:
       type: LoadBalancer  # Override the service type
     apisixoperatorreplicaCount: 1
-    apisixistio-operatordeploymentnamespace: canvas
+    apisixistiooperatordeploymentnamespace: canvas
     apisixoperatorimage:
       repository: ravijangra92/apisix-operator:7.8.0
       pullPolicy: IfNotPresent
