@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "5"
+    "helm.sh/resource-policy": keep
+  name: component-gateway
+  namespace: {{ .Values.IstioGatewaymonitoredNamespaces }}
+spec:
+  selector:
+    istio: ingressgateway  # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "{{ .Values.IstioGatewayServerhostName }}"

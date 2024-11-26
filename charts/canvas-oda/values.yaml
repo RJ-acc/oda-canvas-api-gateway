@@ -141,6 +141,7 @@ component-operator:
     
 
 api-operator-istio:
+  enabled: false
   deployment:
     operatrorName: api-operator-istio
     apiopImage: tmforumodacanvas/api-operator-istio
@@ -337,4 +338,56 @@ oda-webhook:
   version: 0.11.0
   prereleaseSuffix:  
   imagePullPolicy: IfNotPresent
- 
+
+# -----------------------------------------------------------------------------
+# Kong operator and sub-chart parameters
+# -----------------------------------------------------------------------------
+
+kong-gateway-install:
+  enabled: true  # Enable kong-gateway if needed
+kongnamespace: kong
+kong-gateway:
+    kong:
+      postgresql:
+        nameOverride: "postgresql-kong"
+        #enabled: true
+        #namespace: "kong"
+      # Direct configurations to the kong sub-chart if needed
+      deployment:
+        enabled: true
+        serviceAccount:
+          create: true
+          automountServiceAccountToken: false
+        test:
+          enabled: false
+      namespace: kong
+      env:
+        database: "postgres"
+        pg_host: "canvas-postgresql-kong.canvas.svc.cluster.local"
+        pg_user: "kong"
+        pg_password: "kong"
+        pg_database: "kong"
+        router_flavor: "traditional"
+        nginx_worker_processes: "2"
+        proxy_access_log: "/dev/stdout"
+        admin_access_log: "/dev/stdout"
+        admin_gui_access_log: "/dev/stdout"
+        portal_api_access_log: "/dev/stdout"
+        proxy_error_log: "/dev/stderr"
+        admin_error_log: "/dev/stderr"
+        admin_gui_error_log: "/dev/stderr"
+        portal_api_error_log: "/dev/stderr"
+        prefix: "/kong_prefix/"
+      admin:
+        enabled: true
+        type: LoadBalancer
+      proxy:
+        enabled: true
+        type: LoadBalancer
+    kongoperatorreplicaCount: 1
+    IstioGatewaymonitoredNamespaces: components
+    IstioGatewayServerhostName: "*"
+    kongistiooperatordeploymentnamespace: canvas
+    kongoperatorimage:
+      repository: ravijangra92/kong-operator:7.8.7
+      pullPolicy: IfNotPresent
