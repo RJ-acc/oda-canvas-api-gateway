@@ -1,6 +1,5 @@
 gateway:
   type: LoadBalancer  # Override the service type
-namespace: ingress-apisix
 
 ingress-controller:
   config:
@@ -12,5 +11,5 @@ ingress-controller:
 apisixoperatorreplicaCount: 1
 apisixistiooperatordeploymentnamespace: canvas
 apisixoperatorimage:
-  repository: ravijangra92/apisix-operator:7.9.0
+  repository: ravijangra92/apisix-operator:7.8.7
   pullPolicy: IfNotPresent

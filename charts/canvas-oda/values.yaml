@@ -138,29 +138,7 @@ component-operator:
     kcrealm: myrealm
     # -- Log level [python] (https://docs.python.org/3/library/logging.html
     loglevel: '20'
-    
 
-api-operator-istio:
-  enabled: false
-  deployment:
-    operatrorName: api-operator-istio
-    apiopImage: tmforumodacanvas/api-operator-istio
-    apiopVersion: 0.1.0
-    apiopPrereleaseSuffix:
-    imagePullPolicy: IfNotPresent
-    istioGateway: true
-    monitoredNamespaces: 'components'           # comma separated list of namespaces
-    ingressClass:
-      enabled: false
-      name: nginx
-    dataDog:
-      enabled: true
-    hostName: "*"
-    httpsRedirect: true
-    credentialName: istio-ingress-cert    
-  configmap:
-    loglevel: '20'
-    # publicHostname: 'components.example.com'
      
 dependentapi-simple-operator:
   enabled: true
@@ -340,11 +318,37 @@ oda-webhook:
   imagePullPolicy: IfNotPresent
 
 # -----------------------------------------------------------------------------
+# Istio operator and sub-chart parameters
+# -----------------------------------------------------------------------------
+
+api-operator-istio:
+  enabled: true # Default to true
+  deployment:
+    operatrorName: api-operator-istio
+    apiopImage: tmforumodacanvas/api-operator-istio
+    apiopVersion: 0.1.0
+    apiopPrereleaseSuffix:
+    imagePullPolicy: IfNotPresent
+    istioGateway: true
+    monitoredNamespaces: 'components'           # comma separated list of namespaces
+    ingressClass:
+      enabled: false
+      name: nginx
+    dataDog:
+      enabled: true
+    hostName: "*"
+    httpsRedirect: true
+    credentialName: istio-ingress-cert    
+  configmap:
+    loglevel: '20'
+    # publicHostname: 'components.example.com'
+
+# -----------------------------------------------------------------------------
 # Kong operator and sub-chart parameters
 # -----------------------------------------------------------------------------
 
 kong-gateway-install:
-  enabled: true  # Enable kong-gateway if needed
+  enabled: false  # Enable kong-gateway if needed
 kongnamespace: kong
 kong-gateway:
     kong:
@@ -391,3 +395,39 @@ kong-gateway:
     kongoperatorimage:
       repository: ravijangra92/kong-operator:7.8.7
       pullPolicy: IfNotPresent
+
+
+# -----------------------------------------------------------------------------
+# Apisix operator and sub-chart parameters
+# -----------------------------------------------------------------------------
+
+
+apisix-gateway-install:
+  enabled: false  # Enable apisix-gateway if needed
+
+apisix-gateway:
+  apisix:
+    apisix:
+      ssl:
+        enabled: true
+      serviceNamespace: canvas
+    gateway:
+      type: LoadBalancer  # Override the service type
+    ingress-controller:
+      enabled: true   # Enable the ingress controller
+      config:
+        apisix:
+          adminAPIVersion: v3
+          serviceFullname: canvas-apisix-admin
+          serviceNamespace: canvas
+      serviceNamespace: canvas
+    service:
+      type: LoadBalancer  # Override the service type
+    apisixoperatorreplicaCount: 1
+    #apisixistiooperatordeploymentnamespace: canvas
+  apisixoperatorimages:
+    repository: ravijangra92/apisix-operator:7.8.7
+    pullPolicy: IfNotPresent
+  IstioGatewayServerhostName: "*"
+  IstioGatewaymonitoredNamespaces: components
+  apisixistiooperatordeploymentnamespace: canvas

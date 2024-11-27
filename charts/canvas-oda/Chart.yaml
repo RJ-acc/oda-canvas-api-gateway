@@ -88,3 +88,7 @@ dependencies:
     version: "0.1.15"
     repository: 'file://../kong-gateway'
     condition: kong-gateway-install.enabled
+  - name: apisix-gateway
+    version: "0.1.15"
+    repository: 'file://../apisix-gateway'
+    condition: apisix-gateway-install.enabled
