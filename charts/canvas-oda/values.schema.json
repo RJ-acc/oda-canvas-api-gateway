@@ -92,6 +92,6 @@
         }
       }
     ],
-    "errorMessage": "Exactly one of api-operator-istio.enabled, kong-gateway-install.enabled, or apisix-gateway-install.enabled must be true."
+    "errorMessage": "Only one of api-operator-istio.enabled, kong-gateway-install.enabled, or apisix-gateway-install.enabled must be true."
   }
   

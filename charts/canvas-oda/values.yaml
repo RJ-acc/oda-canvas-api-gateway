@@ -322,7 +322,7 @@ oda-webhook:
 # -----------------------------------------------------------------------------
 
 api-operator-istio:
-  enabled: true # Default to true
+  enabled: false # Default to true
   deployment:
     operatrorName: api-operator-istio
     apiopImage: tmforumodacanvas/api-operator-istio
@@ -348,7 +348,7 @@ api-operator-istio:
 # -----------------------------------------------------------------------------
 
 kong-gateway-install:
-  enabled: false  # Enable kong-gateway if needed
+  enabled: true  # Enable kong-gateway if needed
 kongnamespace: kong
 kong-gateway:
     kong:
@@ -393,7 +393,7 @@ kong-gateway:
     IstioGatewayServerhostName: "*"
     kongistiooperatordeploymentnamespace: canvas
     kongoperatorimage:
-      repository: ravijangra92/kong-operator:7.8.7
+      repository: ravijangra92/kong-operator:10.92.95
       pullPolicy: IfNotPresent
 
 
@@ -425,8 +425,8 @@ apisix-gateway:
       type: LoadBalancer  # Override the service type
     apisixoperatorreplicaCount: 1
     #apisixistiooperatordeploymentnamespace: canvas
-  apisixoperatorimages:
-    repository: ravijangra92/apisix-operator:7.8.7
+  apisixoperatorimage:
+    repository: ravijangra92/apisix-operator:10.92.95
     pullPolicy: IfNotPresent
   IstioGatewayServerhostName: "*"
   IstioGatewaymonitoredNamespaces: components
