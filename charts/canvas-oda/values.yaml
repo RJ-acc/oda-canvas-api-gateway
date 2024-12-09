@@ -348,7 +348,7 @@ api-operator-istio:
 # -----------------------------------------------------------------------------
 
 kong-gateway-install:
-  enabled: true  # Enable kong-gateway if needed
+  enabled: false  # Enable kong-gateway if needed
 kongnamespace: kong
 kong-gateway:
     kong:
@@ -403,7 +403,7 @@ kong-gateway:
 
 
 apisix-gateway-install:
-  enabled: false  # Enable apisix-gateway if needed
+  enabled: true  # Enable apisix-gateway if needed
 
 apisix-gateway:
   apisix:

@@ -4,7 +4,7 @@ metadata:
   name: {{ .Release.Name }}-preuninstall-patch-istio-ingress
   namespace: {{ .Values.namespace }}
   annotations:
-    "helm.sh/hook": pre-delete 
+    "helm.sh/hook": pre-delete
 spec:
   template:
     spec:
