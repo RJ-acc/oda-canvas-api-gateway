@@ -3,7 +3,7 @@ name: API Gateway and Helm Chart Release Workflow
 on:
   push:
     branches:
-      - main
+      - features/233-refactoring-operators-testing
 
 concurrency:
   group: chart-release
