@@ -1,5 +1,32 @@
 apiVersion: v1
 entries:
+  api-operator-istio:
+  - apiVersion: v2
+    appVersion: v1beta4
+    created: "2024-12-17T10:32:31.209088629Z"
+    description: A helm chart to deploy the api operator for istio
+    digest: 6c047e2e56b8e0f5bde3a7ed90fe8078a3e68395b738b6806ea2a3f40b8ddf96
+    name: api-operator-istio
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/api-operator-istio-1.0.4/api-operator-istio-1.0.4.tgz
+    version: 1.0.4
+  apisix-gateway:
+  - apiVersion: v2
+    appVersion: 3.9.1
+    created: "2024-12-17T10:32:31.361495089Z"
+    dependencies:
+    - alias: apisix
+      name: apisix
+      repository: https://charts.apiseven.com
+      version: 2.7.0
+    description: A Helm chart for Kubernetes
+    digest: 718a75938eec7f7245530b4bec6d4e02104e62647cb673018c7afd17aed395ab
+    name: apisix-gateway
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/apisix-gateway-0.1.3/apisix-gateway-0.1.3.tgz
+    version: 0.1.3
   canvas-api-gateway:
   - apiVersion: v2
     appVersion: v1beta3
@@ -1638,6 +1665,16 @@ entries:
     - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/canvas-api-gateway-0.0.1/canvas-api-gateway-0.0.1.tgz
     version: 0.0.1
   canvas-namespaces:
+  - apiVersion: v2
+    appVersion: v1beta4
+    created: "2024-12-17T10:32:31.498591954Z"
+    description: A Helm chart for Kubernetes to create a namespace for oda-canvas
+    digest: 2f543921e59d10d19248a18fe250513361fb929349ae872d1c8cc48f6dbd4c46
+    name: canvas-namespaces
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/canvas-namespaces-1.0.1/canvas-namespaces-1.0.1.tgz
+    version: 1.0.1
   - apiVersion: v2
     appVersion: v1beta3
     created: "2024-07-17T09:36:55.566800191Z"
@@ -3631,6 +3668,64 @@ entries:
     - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/canvas-oda-1.1.8/canvas-oda-1.1.8.tgz
     version: 1.1.8
   - apiVersion: v2
+    appVersion: v1beta4
+    created: "2024-12-17T10:32:31.651597104Z"
+    dependencies:
+    - name: cert-manager-init
+      repository: file://../cert-manager-init
+      version: 1.0.2
+    - condition: canvas-namespaces.enabled
+      name: canvas-namespaces
+      repository: file://../canvas-namespaces
+      version: 1.0.1
+    - condition: oda-crds.enabled
+      name: oda-crds
+      repository: file://../oda-crds
+      version: 1.1.4
+    - condition: keycloak.enabled
+      name: keycloak
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.0.2
+    - name: component-operator
+      repository: file://../component-operator
+      version: 1.2.2
+    - name: identityconfig-operator-keycloak
+      repository: file://../identityconfig-operator-keycloak
+      version: 1.0.0
+    - condition: api-operator-istio.enabled
+      name: api-operator-istio
+      repository: file://../api-operator-istio
+      version: 1.0.4
+    - condition: dependentapi-simple-operator.enabled
+      name: dependentapi-simple-operator
+      repository: file://../dependentapi-simple-operator
+      version: 0.2.4
+    - name: secretsmanagement-operator
+      repository: file://../secretsmanagement-operator
+      version: 0.1.3
+    - condition: canvas-vault.enabled
+      name: canvas-vault
+      repository: file://../canvas-vault
+      version: 0.2.1
+    - name: oda-webhook
+      repository: file://../oda-webhook
+      version: 1.1.4
+    - condition: kong-gateway-install.enabled
+      name: kong-gateway
+      repository: file://../kong-gateway
+      version: 0.1.3
+    - condition: apisix-gateway-install.enabled
+      name: apisix-gateway
+      repository: file://../apisix-gateway
+      version: 0.1.3
+    description: A Helm of helm to orchestrate the ODA installation
+    digest: 921c814339500d786a5c1abb03ccc6da572c475705a47446e9607351fdbb2e48
+    name: canvas-oda
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/canvas-oda-1.1.8-lt5/canvas-oda-1.1.8-lt5.tgz
+    version: 1.1.8-lt5
+  - apiVersion: v2
     appVersion: v1beta3
     created: "2024-07-31T09:51:41.240616063Z"
     dependencies:
@@ -4429,6 +4524,20 @@ entries:
   canvas-vault:
   - apiVersion: v2
     appVersion: 1.14.8
+    created: "2024-12-17T10:32:31.761607275Z"
+    dependencies:
+    - name: vault
+      repository: https://helm.releases.hashicorp.com
+      version: 0.26.1
+    description: Installs and configures HashiCorp Vault as an in-cluster DEV Vault
+    digest: c3cae9014438be7617b1082e19ffa924f2587cf3c678e733b01e220426b93dd4
+    name: canvas-vault
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/canvas-vault-0.2.1/canvas-vault-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 1.14.8
     created: "2024-07-17T09:36:55.900018377Z"
     dependencies:
     - name: vault
@@ -4442,6 +4551,21 @@ entries:
     - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/canvas-vault-0.2.0/canvas-vault-0.2.0.tgz
     version: 0.2.0
   cert-manager-init:
+  - apiVersion: v2
+    appVersion: v1beta4
+    created: "2024-12-17T10:32:31.897538926Z"
+    dependencies:
+    - condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: 1.11.0
+    description: A Helm chart for installing the cert manager
+    digest: 86f47efb18a24e6b48e2480b7c5d7f1e051f175ccc4b810e490ad9023c720cbe
+    name: cert-manager-init
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/cert-manager-init-1.0.2/cert-manager-init-1.0.2.tgz
+    version: 1.0.2
   - apiVersion: v2
     appVersion: v1beta3
     created: "2024-07-17T09:36:56.032357092Z"
@@ -4457,6 +4581,17 @@ entries:
     urls:
     - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/cert-manager-init-1.0.0/cert-manager-init-1.0.0.tgz
     version: 1.0.0
+  component-operator:
+  - apiVersion: v2
+    appVersion: v1beta4
+    created: "2024-12-17T10:32:32.040860977Z"
+    description: A helm chart to deploy the component operator
+    digest: 78e1b2c9ff8faecd055ea4841d8faba52b9662fa18059bedafaaa5013d6ae4e6
+    name: component-operator
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/component-operator-1.2.2/component-operator-1.2.2.tgz
+    version: 1.2.2
   controller:
   - apiVersion: v2
     appVersion: 1.0.0
@@ -4489,6 +4624,16 @@ entries:
     - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/controller-1.1.0/controller-1.1.0.tgz
     version: 1.1.0
   dependentapi-simple-operator:
+  - apiVersion: v2
+    appVersion: 0.2.3"
+    created: "2024-12-17T10:32:32.161660865Z"
+    description: The DependentAPI Simple Operator
+    digest: e0d192adf8f6033a2c536d12beffbfd2d52e8e683d174a6abf0c124bdd71195d
+    name: dependentapi-simple-operator
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/dependentapi-simple-operator-0.2.4/dependentapi-simple-operator-0.2.4.tgz
+    version: 0.2.4
   - apiVersion: v2
     appVersion: 0.2.3"
     created: "2024-09-20T04:48:24.079747526Z"
@@ -4529,7 +4674,33 @@ entries:
     urls:
     - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/dependentapi-simple-operator-0.1.1/dependentapi-simple-operator-0.1.1.tgz
     version: 0.1.1
+  identityconfig-operator-keycloak:
+  - apiVersion: v2
+    appVersion: v1beta4
+    created: "2024-12-17T10:32:32.268719308Z"
+    description: A helm chart to deploy the identityconfig operator for keycloak
+    digest: 4375c44827b812486033507dca9c366d524bd45ace170f70100f59fe8c7eb7a1
+    name: identityconfig-operator-keycloak
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/identityconfig-operator-keycloak-1.0.0/identityconfig-operator-keycloak-1.0.0.tgz
+    version: 1.0.0
   kong-gateway:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-12-17T10:32:32.408701544Z"
+    dependencies:
+    - alias: kong
+      name: kong
+      repository: https://charts.konghq.com
+      version: 2.34.0
+    description: A Helm chart for Kubernetes
+    digest: 75a657e2d7937e0604123f4c3a4c56098ccb0bed75790bfc1acbbca4c0b86681
+    name: kong-gateway
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/kong-gateway-0.1.3/kong-gateway-0.1.3.tgz
+    version: 0.1.3
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2024-07-31T09:47:21.912170712Z"
@@ -4547,6 +4718,16 @@ entries:
     - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/kong-gateway-0.1.0/kong-gateway-0.1.0.tgz
     version: 0.1.0
   oda-crds:
+  - apiVersion: v2
+    appVersion: v1beta4
+    created: "2024-12-17T10:32:32.533401666Z"
+    description: A helm chart to deploy the Canvas CRDs
+    digest: ef213d7814723a4e2cb300ad18c60b18f1086d8f9857ba12e8bafea404115eba
+    name: oda-crds
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/oda-crds-1.1.4/oda-crds-1.1.4.tgz
+    version: 1.1.4
   - apiVersion: v2
     appVersion: v1beta3
     created: "2024-09-26T14:45:12.43820391Z"
@@ -4579,6 +4760,16 @@ entries:
     version: 1.1.0
   oda-webhook:
   - apiVersion: v2
+    appVersion: v1beta4
+    created: "2024-12-17T10:32:32.632557487Z"
+    description: A Helm chart to deploy the webhook following pattern in https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/#webhook-conversion
+    digest: 017ceb53c859404b5a8d543dbd014dc30eee2378a6239c64589889803223a978
+    name: oda-webhook
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/oda-webhook-1.1.4/oda-webhook-1.1.4.tgz
+    version: 1.1.4
+  - apiVersion: v2
     appVersion: v1beta3
     created: "2024-08-20T04:07:40.57070634Z"
     description: A Helm chart to deploy the webhook following pattern in https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/#webhook-conversion
@@ -4600,6 +4791,16 @@ entries:
     version: 1.1.1
   secretsmanagement-operator:
   - apiVersion: v2
+    appVersion: 0.1.2
+    created: "2024-12-17T10:32:32.734339395Z"
+    description: The Secrets Management Operator
+    digest: 56f4beb69636a8374edaf82dba8f1e931cf9e1442319c2a2d3abdaaeb4bb69a8
+    name: secretsmanagement-operator
+    type: application
+    urls:
+    - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/secretsmanagement-operator-0.1.3/secretsmanagement-operator-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
     appVersion: 0.1.0
     created: "2024-07-17T09:36:56.688803711Z"
     description: The Secrets Management Operator
@@ -4609,4 +4810,4 @@ entries:
     urls:
     - https://github.com/RJ-acc/oda-canvas-api-gateway/releases/download/secretsmanagement-operator-0.1.0/secretsmanagement-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-11-14T09:26:50.668749944Z"
+generated: "2024-12-17T10:32:32.734852038Z"
